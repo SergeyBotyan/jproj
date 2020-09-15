@@ -8,5 +8,10 @@ bmi = round(m / (h * h), 1)
 #Вывод ИМТ текстом
 print('Ваш индекс массы тела: ', bmi)
 
-#Вывод ИМТ графически
-print('20' + '=' * int(bmi - 20) + '|' + '=' * int(50 - bmi) + '50')
+#Вывод ИМТ графически 
+if bmi >=20 and bmi <=50: 
+    print('20' + '=' * int(bmi - 20) + '|' + '=' * int(50 - bmi) + '50')
+elif bmi < 20:
+    print(int(bmi), '|' + '=' * int(50 - bmi) + '50')
+else:
+    print('20' + '=' * int(bmi - 20) + '|', int(bmi))
