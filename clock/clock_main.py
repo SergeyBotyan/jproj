@@ -1,7 +1,6 @@
 import print_digits
 import time
 import datetime
-counter = 0
 # функция get_current_time возвращает три значения
 # hour, minute, second текущего времени в формате строк.
 def get_current_time():
