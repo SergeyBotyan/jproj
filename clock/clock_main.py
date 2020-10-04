@@ -1,5 +1,5 @@
 import print_digits
-import time
+from time import sleep
 import datetime
 # функция get_current_time возвращает три значения
 # hour, minute, second текущего времени в формате строк.
@@ -47,7 +47,7 @@ if __name__ == '__main__':
             for i in range (1, 6):
                 print(f'{digit1[i]} {digit2[i]} {blink[i]} {digit3[i]}'
                 f' {digit4[i]} {blink[i]} {digit5[i]} {digit6[i]}')
-            time.sleep(0.5)
+            sleep(0.5)
             clear_screen()
         
 
