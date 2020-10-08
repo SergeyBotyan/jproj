@@ -13,15 +13,15 @@
 
 def col(i):
     if i == 1:
-        z = '🟥'
+        z = '\U0001F7E5'
     elif i == 2:
-        z = '⬜'
+        z = '\U00002B1C'
     elif i == 3:
-        z = '🟨'
+        z = '\U0001F7E8'
     elif i == 4:
-        z = '🟦'  
+        z = '\U0001F7E6'  
     elif i == 5:
-        z = '🟩'
+        z = '\U0001F7E9'
     return z
 
 def dig(d, color):
