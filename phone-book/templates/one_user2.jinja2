@@ -1,0 +1,8 @@
+Информация о пользователе: 
+{% for us in user %}
+{{us.id}} {{us.name}} 
+Телефон: {% for number in us.phones %}    {{number}}
+{% endfor %}
+{% endfor %}
+
+

@@ -8,6 +8,5 @@ def main():
         controller = get_controller(state[0])
         state = controller(state[1])
 
-
 if __name__ == "__main__":
     main()

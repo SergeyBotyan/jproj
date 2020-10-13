@@ -16,7 +16,7 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    phones = relationship("Phone", cascade="all, delete",  
+    phones = relationship("Phone", cascade="all, delete-orphan",  
                           back_populates="user")
 
     def __str__(self):
@@ -30,14 +30,26 @@ class User(Base):
         return user
 
     @classmethod
+    def user_exist(cls,name):
+        count = session.query(cls).filter(cls.name == name).count()
+        return count
+
+    @classmethod
+    def userid(cls,name):
+        user = cls(name=name)
+        return user
+
+
+    @classmethod
     def delete(cls, name): 
-        del_people = session.query(cls).filter(cls.name == name).delete()
+        del_people = session.query(cls).filter(cls.name == name).first()
+        session.delete(del_people)
         session.commit()
         return
 
     @classmethod
     def update(cls, name, newname): 
-        user = session.query(cls).get(name)
+        user = session.query(cls).filter(cls.name == name).first()
         user.name = newname
         session.commit()
         return user
@@ -45,6 +57,11 @@ class User(Base):
     @classmethod
     def all(cls): 
         return session.query(cls).all()
+
+    @classmethod
+    def one(cls, username): 
+        user = session.query(cls).filter(cls.name == username).all()
+        return user
 
 
 class Phone(Base):
@@ -63,13 +80,5 @@ class Phone(Base):
         session.add(phone)
         session.commit()
         return phone
-
-    @classmethod
-    def delete(cls, phone): 
-        phone = cls(phone=phone)
-        session.delete(phone)
-        session.commit()
-        return user
-
 
 Base.metadata.create_all(engine)

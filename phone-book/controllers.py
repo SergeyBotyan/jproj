@@ -20,16 +20,23 @@ def all_users_controller(data=None, cls=True):
     return 'main', None # (next state, data)
 
 def one_user_controller(data=None, cls=True):
-    users = User.one()
-    render_template(context={'users':users}, template="all_users.jinja2", cls=cls)
+    render_template(context={}, template="one_user.jinja2", cls=cls)
+    username = input()
+    user = User.one(username)
+    render_template(context={'user':user}, template="one_user2.jinja2", cls=cls)
     input("Продолжить?")
     return 'main', None # (next state, data)
 
 def add_user_controller(data=None, cls=True):
     render_template(context={}, template="add_user.jinja2", cls=cls)
     username = input()
-    user = User.add(username)
-    return 21, user # (next state, data)
+    exist = User.user_exist(username)
+    if exist == 0:
+        user = User.add(username)
+        return 21, user
+    else:
+        user = User.userid(username)
+        return 21, user # (next state, data)
 
 def del_user_controller(data=None, cls=True):
     render_template(context={}, template="del_user.jinja2", cls=cls)
@@ -40,6 +47,7 @@ def del_user_controller(data=None, cls=True):
 def update_user_controller(data=None, cls=True):
     render_template(context={}, template="update_user.jinja2", cls=cls)
     username = input()
+    render_template(context={}, template="update_user2.jinja2", cls=cls)
     newuser = input()
     user = User.update(username, newuser)
     return 'main', None# (next state, data)
