@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -136,3 +137,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+=======
+clock/__pycache__/print_digits.cpython-38.pyc
+>>>>>>> c297a556d6eae8a326c92681ea96729cce01375e
