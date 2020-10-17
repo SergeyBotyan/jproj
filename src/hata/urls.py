@@ -20,4 +20,5 @@ from hello_world.views import hello_world
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello_world/', hello_world),
+    path('', hello_world)
 ]
