@@ -85,11 +85,11 @@ from django.db import models
 class Author(models.Model):
     author_name = models.CharField(
         verbose_name='Автор',
-        max_length=30
+        max_length=50
     )
     author_pseudonym = models.CharField(
         verbose_name='Псевдонимы',
-        max_length=30
+        max_length=50
     )
     author_comments = models.CharField(
         verbose_name='Комментарии',
@@ -106,7 +106,7 @@ class Book_series(models.Model):
 
 class Genre(models.Model):
     genre = models.CharField(
-        verbose_name='Жанр',
+        verbose_name='Жанры',
         max_length=50,
         blank=True,
         null=True
