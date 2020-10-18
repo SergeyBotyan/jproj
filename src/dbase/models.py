@@ -85,31 +85,43 @@ from django.db import models
 class Author(models.Model):
     author_name = models.CharField(
         verbose_name='Автор',
-        max_length=50
+        max_length=50,
+        blank=False,
+        null=False
     )
     author_pseudonym = models.CharField(
         verbose_name='Псевдонимы',
-        max_length=50
+        max_length=50,
+        blank=True,
+        null=True
     )
     author_comments = models.CharField(
         verbose_name='Комментарии',
-        max_length=500
+        max_length=500,
+        blank=True,
+        null=True
     )
+    
+    def __str__(self):
+       return (self.author_name)
 
 class Book_series(models.Model):
     series = models.CharField(
         verbose_name='Книжная серия',
         max_length=100,
-        blank=True,
-        null=True
-        )    
+        blank=False,
+        null=False
+        )
+
+    def __str__(self):
+       return (self.series)    
 
 class Genre(models.Model):
     genre = models.CharField(
         verbose_name='Жанры',
         max_length=50,
-        blank=True,
-        null=True
+        blank=False,
+        null=False
         ) 
     description = models.CharField(
         verbose_name='Описание жанра',
@@ -117,6 +129,9 @@ class Genre(models.Model):
         blank=True,
         null=True
         )
+
+    def __str__(self):
+       return (self.genre)
 
 class Publisher(models.Model):
     publisher = models.CharField(
@@ -131,6 +146,9 @@ class Publisher(models.Model):
         blank=True,
         null=True
         )
+
+    def __str__(self):
+       return (self.publisher)
 
 # class Book(models.Model):
 #     bookname = models.CharField(
