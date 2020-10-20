@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'hello_world',
     'dbase',
+    'dbook',
 ]
 
 MIDDLEWARE = [

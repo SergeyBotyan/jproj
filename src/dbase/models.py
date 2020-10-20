@@ -150,35 +150,7 @@ class Publisher(models.Model):
     def __str__(self):
        return (self.publisher)
 
-# class Book(models.Model):
-#     bookname = models.CharField(
-#         verbose_name='Название книги',
-#         max_length=200,
-#         blank=False,
-#         null=False
-#         )
-    # foto
-    # price
-    # publication_year
-    # pages
-    # bind
-    # form
-    # isbn
-    # weigt
-    # age_limit
-    # publisher = models.ForeignKey(
-    #     Publisher,
-    #     on_delete=models.PROTECT,
-    #     verbose_name='Книжная серия',
-    #     max_length=200,
-    #     blank=False,
-    #     null=False
-    #     )
-    # books_available
-    # active
-    # rating 
-    # add_date
-    # change_date
+
 
 
 
