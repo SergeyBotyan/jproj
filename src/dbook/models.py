@@ -22,42 +22,45 @@ class Book(models.Model):
     author = models.ManyToManyField(
         Author,
         verbose_name='Авторы',
-        blank=True
+        related_name='books',
+        blank=False
     )
-    serie = models.ForeignKey(
+    series = models.ForeignKey(
         Book_series,
         verbose_name='Книжная серия',
         on_delete=models.PROTECT,
+        related_name='books',
         blank=True,
         null=True
     )
     genre = models.ManyToManyField(
         Genre,
         verbose_name='Жанр книги',
-        blank=True
+        related_name='books',
+        blank=False
     )
     publication_year = models.CharField(
         verbose_name='Год издания',
         max_length=4,
-        blank=True,
-        null=True   
+        blank=False,
+        null=False  
     )
     pages = models.IntegerField(
         verbose_name='Количество страниц',
-        blank=True,
-        null=True
+        blank=False,
+        null=False
     )
     bind = models.CharField(
         verbose_name='Переплет',
         max_length=100,
-        blank=True,
-        null=True           
+        blank=False,
+        null=False          
     )
     form = models.CharField(
         verbose_name='Формат',
         max_length=100,
-        blank=True,
-        null=True   
+        blank=False,
+        null=False  
     )
     isbn = models.CharField(
         verbose_name='ISBN',
@@ -67,8 +70,8 @@ class Book(models.Model):
     )
     weigt = models.IntegerField(
         verbose_name='Вес книги',
-        blank=True,
-        null=True   
+        blank=False,
+        null=False   
     )
     age_limit = models.CharField(
         verbose_name='Возрастные ограничения',
@@ -81,8 +84,9 @@ class Book(models.Model):
         on_delete=models.PROTECT,
         verbose_name='Издательство',
         max_length=200,
-        blank=True,
-        null=True
+        related_name='books',
+        blank=False,
+        null=False
         )
     books_available = models.IntegerField(
         verbose_name='Количество книг в наличии',
@@ -91,7 +95,7 @@ class Book(models.Model):
     )
     active_choises = (
         (True, 'Доступна'),
-        (False, 'Недостпна')
+        (False, 'Недоступна')
     )
     active = models.BooleanField(
         verbose_name='Доступна для заказа',
@@ -101,8 +105,8 @@ class Book(models.Model):
     )
     rating = models.FloatField(
         verbose_name='Рейтинг книги',
-        blank=True,
-        null=True
+        blank=False,
+        null=False
     )
     add_date = models.DateField(
         auto_now_add=True,
@@ -114,4 +118,4 @@ class Book(models.Model):
     )
 
     def __str__(self):
-       return (self.bookname)
+       return f'{self.pk} {self.bookname}'
