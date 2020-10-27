@@ -8,7 +8,7 @@
 <body>
     <h1>Список книжных серий</h1>
     Всего в списке: {{series_key|length}} <br>
-    {% for series in series_key %}
+    {% for series in book_series_key %}
         <a href = '/series/{{series.pk}}'> {{series.series}} </a> <br>
     
     {% endfor %}
