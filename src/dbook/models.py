@@ -68,7 +68,7 @@ class Book(models.Model):
         blank=True,
         null=True   
     )
-    weigt = models.IntegerField(
+    weight = models.IntegerField(
         verbose_name='Вес книги',
         blank=False,
         null=False   

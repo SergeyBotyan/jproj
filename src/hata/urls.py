@@ -16,9 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from hello_world.views import hello_world
+from dbase.views import select, show_authors, show_one_author, show_book_series, show_one_series, show_genre, show_one_genre, show_publishers, show_one_publisher
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello_world/', hello_world),
-    path('', hello_world)
+    path('author/', show_authors),
+    path('author/<int:pk>/', show_one_author),
+    path('series/', show_book_series),
+    path('series/<int:pk>/', show_one_series),
+    path('genre/', show_genre),
+    path('genre/<int:pk>/', show_one_genre),
+    path('publisher/', show_publishers),
+    path('publisher/<int:pk>/', show_one_publisher),
+    path('', select)
 ]
