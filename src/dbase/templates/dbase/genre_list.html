@@ -8,6 +8,7 @@
 <body>
     <h1>Список жанров</h1>
     Всего в списке: {{genre_key|length}} <br>
+    <h2><a href='/genre/create/'>Создать новый жанр</a></h2> <br>
     {% for genre in genre_key %}
         <a href = '/genre/{{genre.pk}}'> {{genre.genre}} </a> <br>
     

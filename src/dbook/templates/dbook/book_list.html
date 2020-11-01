@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список книг</title>
+</head>
+<body>
+    <h1>СПИСОК КНИГ</h1>
+    Всего в списке: {{books_key|length}} <br>
+    <h2><a href='/book/create'>Создать новую</a></h2> <br>
+    {% for book in books_key %}
+        <a href = '/book/{{book.pk}}/'> {{book.bookname}} </a> <br>
+    
+    {% endfor %}
+</body>
+</html>

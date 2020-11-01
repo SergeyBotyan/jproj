@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Список издателей</title>
 </head>
 <body>
     <h1>Список издательств</h1>
     Всего в списке: {{publisher_key|length}} <br>
+    <h2><a href='/publisher/create/'>Создать нового издателя</a></h2> <br>
     {% for publisher in publisher_key %}
         <a href = '/publisher/{{publisher.pk}}'> {{publisher.publisher}} </a> <br>
     

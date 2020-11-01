@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Список авторов</title>
 </head>
 <body>
     <h1>Список авторов</h1>
     Всего в списке: {{authors_key|length}} <br>
+    <h2><a href='/author/create/'>Создать нового автора</a></h2> <br>
     {% for author in authors_key %}
         <a href = '/author/{{author.pk}}'> {{author.author_name}} </a> <br>
     

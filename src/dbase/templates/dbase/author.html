@@ -7,8 +7,13 @@
 </head>
 <body>
     <h1>Данные об авторе</h1>
+    <a href='/author/update/{{author_pk}}/'>Изменить</a>
+    <a href='/author/delete/{{author_pk}}/'>Удалить</a>
     <h2>{{author_key.author_name}}<h2>
-    Также известен как: {{author_key.author_pseudonym}}
+    Также известен как: <br>
+    {{author_key.author_pseudonym}}<br>
+    Примечания: <br>
+    {{author_key.author_comments}}
 
 
     
