@@ -1,22 +1,22 @@
 {% extends "customer_base.html" %}
 
 {% block title %}
-Список авторов
+Список книжных серий
 {% endblock title %}
 
 {% block pagename %}
-  Список авторов
+  Список книжных серий
 {% endblock pagename %}
 
    
 {% block content %}
- <a href="/author/create" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Создать</a>
+ <a href="/series/create" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Создать</a>
     
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
         <th scope="col">Номер</th>
-        <th scope="col">Имя</th>
+        <th scope="col">Название</th>
         <th scope="col" class='text-center'>Действия</th>
     </tr>
   </thead>
@@ -25,10 +25,10 @@
   {% for object in object_list %}
     <tr>
       <td>{{object.pk}}</td>
-      <td><a href = '/author/{{object.pk}}/'> <b>{{object.name}} </b></a></td>
-      <td class='text-center'><a href='{% url 'author-view' object.pk %}' class="btn btn-success" role="button" aria-pressed="true"> <i class="far fa-eye"></i>&nbspПРОСМОТР </a> 
-      <a href='/author/update/{{object.pk}}/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspИЗМЕНИТЬ </a> 
-      <a href='/author/delete/{{object.pk}}/' class="btn btn-danger" role="button" aria-pressed="true"> <i class="far fa-trash-alt"></i>&nbspУДАЛИТЬ </a></td>
+      <td><a href = '/series/{{object.pk}}/'> <b>{{object.name}} </b></a></td>
+      <td class='text-center'><a href='{% url 'series-view' object.pk %}' class="btn btn-success" role="button" aria-pressed="true"> <i class="far fa-eye"></i>&nbspПРОСМОТР </a> 
+      <a href='/series/update/{{object.pk}}/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspИЗМЕНИТЬ </a> 
+      <a href='/series/delete/{{object.pk}}/' class="btn btn-danger" role="button" aria-pressed="true"> <i class="far fa-trash-alt"></i>&nbspУДАЛИТЬ </a></td>
     </tr>
     {% endfor %}
 

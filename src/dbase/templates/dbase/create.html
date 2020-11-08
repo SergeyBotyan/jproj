@@ -1,20 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{header}}</title>
-</head>
-<body>
+{% extends "customer_base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% csrf_token %}
 
-    <h1>{{header}}</h1>
-    <form action='' method='POST'>
+
+{% block title %}
+СОЗДАНИЕ/КОРРЕКЦИЯ ОБЪЕКТА
+{% endblock title %}
+
+{% block pagename %}
+  СОЗДАНИЕ/КОРРЕКЦИЯ ОБЪЕКТА
+{% endblock pagename %}
+
+   
+{% block content %}
+    {{form|crispy}}
+    <form method='POST'>
     {% csrf_token %}
-    {{form.as_p}}
-
-    <button type='submit'>Submit</button>
+    <button type='submit' class="btn btn-primary">ЗАПИСАТЬ</button>
     </form>
-
-    
-</body>
-</html>
+{% endblock content %}

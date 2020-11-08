@@ -1,203 +1,171 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Author, Book_series, Genre, Publisher
-from .forms import CreateAuthorForm, CreateGenreForm, CreatePublisherForm, CreateSeriesForm
+from .forms import AuthorForm, GenreForm, PublisherForm, SeriesForm
+from dbook.models import Book
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, View
 
 # Create your views here.
 
-def select(request):
-    return render(request, template_name='dbase/select.html')
+class Select(ListView):
+    model=Book
+    ordering='-pk'
+    template_name='dbase/select.html'
 
-def show_authors(request):
-    authors = Author.objects.all()
-    con = {'authors_key':authors}
-    return render(request, template_name='dbase/author_list.html', context=con)
+    def get_queryset(self):
+        ordering='-pk'
+        return super().get_queryset()[0:9]
 
-def show_one_author(request, pk):
-    author_pk = pk
-    author = Author.objects.get(pk=author_pk)
-    con = {'author_key':author, 'author_pk':author_pk}
-    return render(request, 
-    template_name='dbase/author.html', 
-    context=con)
 
-def create_authors(request):
-    if request.method == 'POST':
-        form = CreateAuthorForm(data=request.POST)
-        if form.is_valid():
-            form = CreateAuthorForm(request.POST)
-            form.save()
-            return HttpResponseRedirect('/author')
-    else:
-        form = CreateAuthorForm()
-    return render(request,
-        template_name='dbase/create.html',
-        context={'form':form, 'header':'Создаем автора'}
-        )
+class AuthorListView(ListView):
+    model=Author
+    paginate_by = 20
+    template_name='dbase/author_list.html'
 
-def update_authors(request, pk):
-    if request.method == 'POST':
-        form = CreateAuthorForm(data=request.POST)
-        if form.is_valid():
-            old_author = Author.objects.get(pk=pk)
-            new_author = CreateAuthorForm(request.POST, instance=old_author)
-            new_author.save()
-            return HttpResponseRedirect('/author')
-    else:
-        old_author = Author.objects.get(pk=pk)
-        form = CreateAuthorForm(instance=old_author)
-    return render(
-        request, 
-        template_name='dbase/create.html', 
-        context={'form':form, 'header':'Изменяем автора'}
-        )
+class AuthorDetailView(DetailView):
+    model=Author
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        author =  Author.objects.get(pk=pk)
+        context['form'] = AuthorForm(instance=author)
+        return context
+    
+class AuthorCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/admin/login/'
+    redirect_field_name = '/author'
+    model=Author
+    fields='__all__'
+    template_name = 'dbase/create.html'
+    success_url = '/book'
 
-def delete_authors(request, pk):
-    author_pk = pk
-    del_author = Author.objects.get(pk=author_pk)
-    del_author.delete()
-    return HttpResponseRedirect('/author')
+class AuthorDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = '/admin/login/'
+    redirect_field_name = '/author'
+    model=Author
+    success_url = '/author'
 
-def show_book_series(request):
-    book_series = Book_series.objects.all()
-    con = {'book_series_key':book_series}
-    return render(request, template_name='dbase/series_list.html', context=con)
+class AuthorUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/admin/login/'
+    redirect_field_name = '/author'
+    model=Author
+    fields = '__all__'
+    success_url = '/author'
+    template_name = 'dbase/create.html'
+    template_name_suffix = '_update_form'
 
-def show_one_series(request, pk):
-    series_pk = pk
-    series = Book_series.objects.get(pk=series_pk)
-    con = {'series_key':series, 'series_pk':series_pk}
-    return render(request, template_name='dbase/series.html', context=con)
+class SeriesListView(ListView):
+    model=Book_series
+    paginate_by = 20
+    template_name='dbase/series_list.html'
 
-def create_book_series(request):
-    if request.method == 'POST':
-        form = CreateSeriesForm(data=request.POST)
-        if form.is_valid():
-            form = CreateSeriesForm(request.POST)
-            form.save()
-            return HttpResponseRedirect('/series')
-    else:
-        form = CreateSeriesForm()
-    return render(request,
-        template_name='dbase/create.html',
-        context={'form':form, 'header':'Создаем книжную серию'}
-        )
+class SeriesDetailView(DetailView):
+    model=Book_series
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        series =  Book_series.objects.get(pk=pk)
+        context['form'] = SeriesForm(instance=series)
+        return context
+    
+class SeriesCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/admin/login/'
+    redirect_field_name = '/series'
+    model=Book_series
+    fields='__all__'
+    template_name = 'dbase/create.html'
+    success_url = '/series'
 
-def update_book_series(request, pk):
-    if request.method == 'POST':
-        form = CreateSeriesForm(data=request.POST)
-        if form.is_valid():
-            old_series = Book_series.objects.get(pk=pk)
-            new_series = CreateSeriesForm(request.POST, instance=old_series)
-            new_series.save()
-            return HttpResponseRedirect('/series')
-    else:
-        old_series = Book_series.objects.get(pk=pk)
-        form = CreateSeriesForm(instance=old_series)
-    return render(
-        request, 
-        template_name='dbase/create.html', 
-        context={'form':form, 'header':'Изменяем книжную серию'}
-        )
+class SeriesDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = '/admin/login/'
+    redirect_field_name = '/series'
+    model=Book_series
+    success_url = '/series'
 
-def delete_book_series(request, pk):
-    series_pk = pk
-    del_series = Book_series.objects.get(pk=series_pk)
-    del_series.delete()
-    return HttpResponseRedirect('/series')
+class SeriesUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/admin/login/'
+    redirect_field_name = '/series'
+    model=Book_series
+    fields = '__all__'
+    success_url = '/series'
+    template_name = 'dbase/create.html'
+    template_name_suffix = '_update_form'
 
-def show_genre(request):
-    genre = Genre.objects.all()
-    con = {'genre_key':genre}
-    return render(request, template_name='dbase/genre_list.html', context=con)
+class GenreListView(ListView):
+    model=Genre
+    paginate_by = 20
+    template_name='dbase/genre_list.html'
 
-def show_one_genre(request, pk):
-    genre_pk = pk
-    genre = Genre.objects.get(pk=genre_pk)
-    con = {'genre_key':genre, 'genre_pk':genre_pk}
-    return render(request, template_name='dbase/genre.html', context=con)
+class GenreDetailView(DetailView):
+    model=Genre
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        genre =  Genre.objects.get(pk=pk)
+        context['form'] = GenreForm(instance=genre)
+        return context
+    
+class GenreCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/admin/login/'
+    redirect_field_name = '/genre'
+    model=Genre
+    fields='__all__'
+    template_name = 'dbase/create.html'
+    success_url = '/genre'
 
-def create_genre(request):
-    if request.method == 'POST':
-        form = CreateGenreForm(data=request.POST)
-        if form.is_valid():
-            form = CreateGenreForm(request.POST)
-            form.save()
-            return HttpResponseRedirect('/genre')
-    else:
-        form = CreateGenreForm()
-    return render(request,
-        template_name='dbase/create.html',
-        context={'form':form, 'header':'Создаем жанр'}
-        )
+class GenreDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = '/admin/login/'
+    redirect_field_name = '/genre'
+    model=Genre
+    success_url = '/genre'
 
-def update_genre(request, pk):
-    if request.method == 'POST':
-        form = CreateGenreForm(data=request.POST)
-        if form.is_valid():
-            old_genre = Genre.objects.get(pk=pk)
-            new_genre = CreateGenreForm(request.POST, instance=old_genre)
-            new_genre.save()
-            return HttpResponseRedirect('/genre')
-    else:
-        old_genre = Genre.objects.get(pk=pk)
-        form = CreateGenreForm(instance=old_genre)
-    return render(
-        request, 
-        template_name='dbase/create.html', 
-        context={'form':form, 'header':'Изменяем жанр'}
-        )
+class GenreUpdateView(UpdateView):
+    login_url = '/admin/login/'
+    redirect_field_name = '/genre'
+    model=Genre
+    fields = '__all__'
+    success_url = '/genre'
+    template_name = 'dbase/create.html'
+    template_name_suffix = '_update_form'
 
-def delete_genre(request, pk):
-    genre_pk = pk
-    del_genre = Genre.objects.get(pk=genre_pk)
-    del_genre.delete()
-    return HttpResponseRedirect('/genre')
+class PublisherListView(ListView):
+    model=Publisher
+    paginate_by = 20
+    template_name='dbase/publisher_list.html'
 
-def show_publishers(request):
-    pub = Publisher.objects.all()
-    con = {'publisher_key':pub}
-    return render(request, template_name='dbase/publisher_list.html', context=con)
+class PublisherDetailView(DetailView):
+    model=Publisher
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        publisher =  Publisher.objects.get(pk=pk)
+        context['form'] = PublisherForm(instance=publisher)
+        return context
+    
+class PublisherCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/admin/login/'
+    redirect_field_name = '/publisher'
+    model=Publisher
+    fields='__all__'
+    template_name = 'dbase/create.html'
+    success_url = '/publisher'
 
-def show_one_publisher(request, pk):
-    publisher_pk = pk
-    pub = Publisher.objects.get(pk=publisher_pk)
-    con = {'publisher_key':pub, 'publisher_pk':publisher_pk}
-    return render(request, template_name='dbase/publisher.html', context=con)
+class PublisherDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = '/admin/login/'
+    redirect_field_name = '/publisher'
+    model=Publisher
+    success_url = '/publisher'
 
-def create_publishers(request):
-    if request.method == 'POST':
-        form = CreatePublisherForm(data=request.POST)
-        if form.is_valid():
-            form = CreatePublisherForm(request.POST)
-            form.save()
-            return HttpResponseRedirect('/publisher')
-    else:
-        form = CreatePublisherForm()
-    return render(request,
-        template_name='dbase/create.html',
-        context={'form':form, 'header':'Создаем издателя'}
-        )
-
-def update_publishers(request, pk):
-    if request.method == 'POST':
-        form = CreatePublisherForm(data=request.POST)
-        if form.is_valid():
-            old_publisher = Publisher.objects.get(pk=pk)
-            new_publisher = CreatePublisherForm(request.POST, instance=old_publisher)
-            new_publisher.save()
-            return HttpResponseRedirect('/publisher')
-    else:
-        old_publisher = Publisher.objects.get(pk=pk)
-        form = CreatePublisherForm(instance=old_publisher)
-    return render(
-        request, 
-        template_name='dbase/create.html', 
-        context={'form':form, 'header':'Изменяем издателя'}
-        )
-
-def delete_publishers(request, pk):
-    publisher_pk = pk
-    del_publisher = Publisher.objects.get(pk=publisher_pk)
-    del_publisher.delete()
-    return HttpResponseRedirect('/publisher')
+class PublisherUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/admin/login/'
+    redirect_field_name = '/publisher'
+    model=Publisher
+    fields = '__all__'
+    success_url = '/publisher'
+    template_name = 'dbase/create.html'
+    template_name_suffix = '_update_form'

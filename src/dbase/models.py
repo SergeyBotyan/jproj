@@ -83,19 +83,19 @@ from django.db import models
 #         return (self.last_name)
 
 class Author(models.Model):
-    author_name = models.CharField(
+    name = models.CharField(
         verbose_name='Автор',
         max_length=50,
         blank=False,
         null=False
     )
-    author_pseudonym = models.CharField(
+    pseudonym = models.CharField(
         verbose_name='Псевдонимы',
         max_length=50,
         blank=True,
         null=True
     )
-    author_comments = models.CharField(
+    comments = models.CharField(
         verbose_name='Комментарии',
         max_length=500,
         blank=True,
@@ -103,10 +103,10 @@ class Author(models.Model):
     )
     
     def __str__(self):
-       return (self.author_name)
+       return (self.name)
 
 class Book_series(models.Model):
-    series = models.CharField(
+    name = models.CharField(
         verbose_name='Книжная серия',
         max_length=100,
         blank=False,
@@ -114,10 +114,10 @@ class Book_series(models.Model):
         )
 
     def __str__(self):
-       return (self.series)    
+       return (self.name)    
 
 class Genre(models.Model):
-    genre = models.CharField(
+    name = models.CharField(
         verbose_name='Жанры',
         max_length=50,
         blank=False,
@@ -131,16 +131,16 @@ class Genre(models.Model):
         )
 
     def __str__(self):
-       return (self.genre)
+       return (self.name)
 
 class Publisher(models.Model):
-    publisher = models.CharField(
+    name = models.CharField(
         verbose_name='Издательство',
         max_length=100,
         blank=False,
         null=False
         )
-    publisher_desc = models.CharField(
+    description = models.CharField(
         verbose_name='Информация об издательстве',
         max_length=500,
         blank=True,
@@ -148,7 +148,7 @@ class Publisher(models.Model):
         )
 
     def __str__(self):
-       return (self.publisher)
+       return (self.name)
 
 
 

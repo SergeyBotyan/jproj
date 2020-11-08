@@ -1,0 +1,25 @@
+{% extends "customer_base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+  Карточка издателя
+{% endblock title %}
+
+{% block pagename %}
+  Карточка издателя
+{% endblock pagename %}
+
+   
+{% block content %}
+<a href='/publisher/update/{{publisher.pk}}/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspИЗМЕНИТЬ </a> 
+<a href='/publisher/delete/{{publisher.pk}}/' class="btn btn-danger" role="button" aria-pressed="true"> <i class="far fa-trash-alt"></i>&nbspУДАЛИТЬ </a><br>
+    {{form|crispy}}
+{% endblock content %}
+    
+
+
+    
+</body>
+</html>

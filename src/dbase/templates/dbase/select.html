@@ -1,22 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Выберите список</h1>
+{% extends "customer_base.html" %}
+
+{% block title %}
+Главная страница
+{% endblock title %}
+
+{% block pagename %}
+  Выберите список
+{% endblock pagename %}
+
+   
+{% block content %}
+
     <h2>
     <a href = '/book/'> Книги </a> <br>
     <a href = '/author/'> Авторы </a> <br>
     <a href = '/series/'> Книжные серии </a> <br>
     <a href = '/genre/'> Жанры </a> <br>
     <a href = '/publisher/'> Издательства </a> <br>
-   
-    <h2>
-    
+    </h2>
 
-    
-</body>
-</html>
+    <table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+        <th scope="col">Номер</th>
+        <th scope="col">Название</th>
+        <th scope="col" class='text-center'>Действия</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for object in object_list %}
+    <tr>
+      <td>{{object.pk}}</td>
+      <td><a href = '/book/{{object.pk}}/'> <b>{{object.name}} </b></a></td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+{% endblock content %}
