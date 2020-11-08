@@ -14,8 +14,9 @@
 
    
 {% block content %}
-    {{form|crispy}}
+   
     <form method='POST'>
+     {{form|crispy}}
     {% csrf_token %}
     <button type='submit' class="btn btn-primary">ЗАПИСАТЬ</button>
     </form>

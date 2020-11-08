@@ -13,15 +13,6 @@ class BookListView(ListView):
     paginate_by = 20
     template_name='dbook/book_list.html'
 
-class Book5ListView(ListView):
-    model=Book
-    ordering='-pk'
-    template_name='dbook/book_list.html'
-
-    def get_queryset(self):
-        return super().get_queryset()[0:5]
-
-
 class BookDetailView(DetailView):
     model=Book
     
@@ -51,7 +42,7 @@ class BookDeleteView(LoginRequiredMixin, DeleteView):
     model=Book
     success_url = '/book'
 
-class BookUpdateView(UpdateView):
+class BookUpdateView(LoginRequiredMixin, UpdateView):
     login_url = '/admin/login/'
     redirect_field_name = '/'
     model=Book

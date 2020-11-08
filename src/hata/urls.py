@@ -23,13 +23,12 @@ from dbase.views import PublisherListView,PublisherDeleteView, PublisherDetailVi
 from dbase.views import SeriesListView, SeriesDeleteView, SeriesDetailView, SeriesCreateView, SeriesUpdateView
 from dbase.views import GenreListView, GenreDeleteView, GenreDetailView, GenreCreateView, GenreUpdateView
 from dbase.views import AuthorListView, AuthorDeleteView, AuthorDetailView, AuthorCreateView, AuthorUpdateView
-from dbook.views import BookListView, BookCreateView, Book5ListView, BookDetailView, BookDeleteView, BookUpdateView
+from dbook.views import BookListView, BookCreateView, BookDetailView, BookDeleteView, BookUpdateView
 from user.views import Login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('book/', BookListView.as_view()),
-    path('book5/', Book5ListView.as_view()),
     path('book/<int:pk>/', BookDetailView.as_view(), name='book-view'),
     path('book/create/', BookCreateView.as_view()),
     path('book/update/<int:pk>/', BookUpdateView.as_view()),

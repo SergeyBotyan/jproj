@@ -1,25 +1,23 @@
 {% extends "customer_base.html" %}
+
 {% load static %}
 {% load crispy_forms_tags %}
-{% csrf_token %}
-
 
 {% block title %}
-  <title>СОЗДАНИЕ КНИГИ</title>
+  <title>СОЗДАНИЕ/РЕДАКТИРОВАНИЕ КНИГИ</title>
 {% endblock title %}
 
 {% block pagename %}
-  СОЗДАНИЕ КНИГИ
+  СОЗДАНИЕ/РЕДАКТИРОВАНИЕ  КНИГИ
 {% endblock pagename %}
 
   
 {% block content %}
-    {{form|crispy}}
     <form method='POST'>
+    {{form|crispy}}
     {% csrf_token %}
     <button type='submit' class="btn btn-primary">ЗАПИСАТЬ</button>
     </form>
-
 {% endblock content %}
 
 
