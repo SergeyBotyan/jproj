@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'hello_world',
     'dbase',
     'dbook',
@@ -69,6 +70,11 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    '/var/www/static/',
 ]
 
 WSGI_APPLICATION = 'hata.wsgi.application'
@@ -125,3 +131,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/home/SergeyBotyan/jproj/static'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/home/SergeyBotyan/jproj/media'
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

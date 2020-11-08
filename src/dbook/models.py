@@ -3,7 +3,7 @@ from dbase.models import Author, Book_series, Genre, Publisher
 
 # Create your models here.
 class Book(models.Model):
-    bookname = models.CharField(
+    name = models.CharField(
         verbose_name='Название книги',
         max_length=200,
         blank=False,
@@ -11,6 +11,7 @@ class Book(models.Model):
         )
     foto = models.ImageField(
         verbose_name='Фото книги',
+        upload_to='media/book_images',
         blank=True,
         null=True   
     )
