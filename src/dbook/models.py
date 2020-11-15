@@ -1,6 +1,9 @@
 from django.db import models
 from dbase.models import Author, Book_series, Genre, Publisher
 
+def image_upload_path(instance, filename):
+    return 'book_images/{0}_{1}'.format(instance.id, filename)
+
 # Create your models here.
 class Book(models.Model):
     name = models.CharField(
@@ -11,7 +14,8 @@ class Book(models.Model):
         )
     foto = models.ImageField(
         verbose_name='Фото книги',
-        upload_to='media/book_images',
+        upload_to=image_upload_path,
+        default='book_images/no_image.jpg',
         blank=True,
         null=True   
     )

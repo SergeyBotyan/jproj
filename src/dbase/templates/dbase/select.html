@@ -1,7 +1,7 @@
 {% extends "customer_base.html" %}
 
 {% block title %}
-Главная страница
+S-STORE | Главная страница
 {% endblock title %}
 
 {% block pagename %}
@@ -10,6 +10,9 @@
 
    
 {% block content %}
+{%if user.is_authenticated%}
+Здравствуйте, {{user}}!
+{%endif%}
 
     <h2>
     <a href = '/book/'> Книги </a> <br>
@@ -24,17 +27,33 @@
     <tr>
         <th scope="col">Номер</th>
         <th scope="col">Название</th>
+        <th scope="col">FOTO</th>
     </tr>
   </thead>
   <tbody>
-
+<div class="row">
+  
   {% for object in object_list %}
-    <tr>
-      <td>{{object.pk}}</td>
-      <td><a href = '/book/{{object.pk}}/'> <b>{{object.name}} </b></a></td>
-    </tr>
-    {% endfor %}
+  <div class="col-md-4">
+  <div class="card" style="width: 18rem;">
 
+  <img src='{{object.foto.url}}' class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{object.name}}</h5>
+    </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">{{object.author}}</li>
+    <li class="list-group-item">{{object.price}}}</li>
+    <li class="list-group-item">{{object.genre}}</li>
+  </ul>
+  <div class="card-body">
+    <a href="/book/{{object.pk}}/" class="card-link">Просмотр</a>
+    <a href="#" class="card-link">Положить в корзину</a>
+  </div>
+</div>
+</div>
+    {% endfor %}
+</div>
   </tbody>
 </table>
 {% endblock content %}

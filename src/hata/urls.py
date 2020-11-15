@@ -14,17 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.views.generic import TemplateView
+from django.conf.urls.static import static
+from django.conf import settings
 
-from hello_world.views import hello_world
 from dbase.views import Select
 from dbase.views import PublisherListView,PublisherDeleteView, PublisherDetailView, PublisherCreateView, PublisherUpdateView
 from dbase.views import SeriesListView, SeriesDeleteView, SeriesDetailView, SeriesCreateView, SeriesUpdateView
 from dbase.views import GenreListView, GenreDeleteView, GenreDetailView, GenreCreateView, GenreUpdateView
 from dbase.views import AuthorListView, AuthorDeleteView, AuthorDetailView, AuthorCreateView, AuthorUpdateView
 from dbook.views import BookListView, BookCreateView, BookDetailView, BookDeleteView, BookUpdateView
-from user.views import Login
+from user.views import UserChangeForm, UserCreationForm
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -53,6 +54,15 @@ urlpatterns = [
     path('publisher/create/', PublisherCreateView.as_view()),
     path('publisher/update/<int:pk>/', PublisherUpdateView.as_view()),
     path('publisher/delete/<int:pk>/', PublisherDeleteView.as_view()),
-    path('auth/login/', Login.as_view(), name='login'),
-    path('', Select.as_view())
-]
+    # accounts/ login/ [name='login']
+    # accounts/ logout/ [name='logout']
+    # accounts/ password_change/ [name='password_change']
+    # accounts/ password_change/done/ [name='password_change_done']
+    # accounts/ password_reset/ [name='password_reset']
+    # accounts/ password_reset/done/ [name='password_reset_done']
+    # accounts/ reset/<uidb64>/<token>/ [name='password_reset_confirm']
+    # accounts/ reset/done/ [name='password_reset_complete']
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('user.urls')),
+    path('', Select.as_view(), name='home')
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -4,7 +4,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-  <title>СОЗДАНИЕ/РЕДАКТИРОВАНИЕ КНИГИ</title>
+  S-STORE | СОЗДАНИЕ/РЕДАКТИРОВАНИЕ КНИГИ
 {% endblock title %}
 
 {% block pagename %}
@@ -14,8 +14,10 @@
   
 {% block content %}
     <form method='POST'>
+      {% csrf_token %}
+  <button type='submit' class="btn btn-primary">ЗАПИСАТЬ</button>
     {{form|crispy}}
-    {% csrf_token %}
+    
     <button type='submit' class="btn btn-primary">ЗАПИСАТЬ</button>
     </form>
 {% endblock content %}

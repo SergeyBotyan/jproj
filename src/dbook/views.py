@@ -10,7 +10,7 @@ from .forms import BookForm
 
 class BookListView(ListView):
     model=Book
-    paginate_by = 20
+#    paginate_by = 20
     template_name='dbook/book_list.html'
 
 class BookDetailView(DetailView):
@@ -49,5 +49,4 @@ class BookUpdateView(LoginRequiredMixin, UpdateView):
     fields = '__all__'
     success_url = '/book'
     template_name = 'dbook/book_create.html'
-    template_name_suffix = '_update_form'
 

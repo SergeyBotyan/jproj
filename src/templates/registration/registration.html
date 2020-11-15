@@ -1,15 +1,15 @@
 {% extends "customer_base.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
-
+{% csrf_token %}
 
 
 {% block title %}
-СОЗДАНИЕ/КОРРЕКЦИЯ ОБЪЕКТА
+СОЗДАНИЕ УЧЕТНОЙ ЗАПИСИ
 {% endblock title %}
 
 {% block pagename %}
-  СОЗДАНИЕ/КОРРЕКЦИЯ ОБЪЕКТА
+  СОЗДАНИЕ УЧЕТНОЙ ЗАПИСИ
 {% endblock pagename %}
 
    
@@ -18,6 +18,6 @@
     <form method='POST'>
      {{form|crispy}}
     {% csrf_token %}
-    <button type='submit' class="btn btn-primary">ЗАПИСАТЬ</button>
+    <button type='submit' class="btn btn-primary">СОЗДАТЬ</button>
     </form>
 {% endblock content %}

@@ -1,23 +1,22 @@
-{% extends "customer_base.html" %}
+{% extends "login_base.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
 
 
-
 {% block title %}
-СОЗДАНИЕ/КОРРЕКЦИЯ ОБЪЕКТА
+S-STORE | Edit Profile
 {% endblock title %}
 
 {% block pagename %}
-  СОЗДАНИЕ/КОРРЕКЦИЯ ОБЪЕКТА
+  Редактирование профиля пользователя {{user}}
 {% endblock pagename %}
 
-   
 {% block content %}
-   
+
     <form method='POST'>
      {{form|crispy}}
     {% csrf_token %}
     <button type='submit' class="btn btn-primary">ЗАПИСАТЬ</button>
     </form>
-{% endblock content %}
+
+{% endblock %}

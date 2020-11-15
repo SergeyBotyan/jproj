@@ -34,7 +34,7 @@ class AuthorDetailView(DetailView):
         return context
     
 class AuthorCreateView(LoginRequiredMixin, CreateView):
-    login_url = '/admin/login/'
+    login_url = '/accounts/login/'
     redirect_field_name = '/author'
     model=Author
     fields='__all__'
@@ -42,13 +42,13 @@ class AuthorCreateView(LoginRequiredMixin, CreateView):
     success_url = '/book'
 
 class AuthorDeleteView(LoginRequiredMixin, DeleteView):
-    login_url = '/admin/login/'
+    login_url = '/accounts/login/'
     redirect_field_name = '/author'
     model=Author
     success_url = '/author'
 
 class AuthorUpdateView(LoginRequiredMixin, UpdateView):
-    login_url = '/admin/login/'
+    login_url = '/accounts/login/'
     redirect_field_name = '/author'
     model=Author
     fields = '__all__'
@@ -72,7 +72,7 @@ class SeriesDetailView(DetailView):
         return context
     
 class SeriesCreateView(LoginRequiredMixin, CreateView):
-    login_url = '/admin/login/'
+    login_url = '/accounts/login/'
     redirect_field_name = '/series'
     model=Book_series
     fields='__all__'
@@ -80,13 +80,13 @@ class SeriesCreateView(LoginRequiredMixin, CreateView):
     success_url = '/series'
 
 class SeriesDeleteView(LoginRequiredMixin, DeleteView):
-    login_url = '/admin/login/'
+    login_url = '/accounts/login/'
     redirect_field_name = '/series'
     model=Book_series
     success_url = '/series'
 
 class SeriesUpdateView(LoginRequiredMixin, UpdateView):
-    login_url = '/admin/login/'
+    login_url = '/accounts/login/'
     redirect_field_name = '/series'
     model=Book_series
     fields = '__all__'
@@ -110,7 +110,7 @@ class GenreDetailView(DetailView):
         return context
     
 class GenreCreateView(LoginRequiredMixin, CreateView):
-    login_url = '/admin/login/'
+    login_url = '/accounts/login/'
     redirect_field_name = '/genre'
     model=Genre
     fields='__all__'
@@ -118,13 +118,13 @@ class GenreCreateView(LoginRequiredMixin, CreateView):
     success_url = '/genre'
 
 class GenreDeleteView(LoginRequiredMixin, DeleteView):
-    login_url = '/admin/login/'
+    login_url = '/accounts/login/'
     redirect_field_name = '/genre'
     model=Genre
     success_url = '/genre'
 
 class GenreUpdateView(UpdateView):
-    login_url = '/admin/login/'
+    login_url = '/accounts/login/'
     redirect_field_name = '/genre'
     model=Genre
     fields = '__all__'
@@ -148,7 +148,7 @@ class PublisherDetailView(DetailView):
         return context
     
 class PublisherCreateView(LoginRequiredMixin, CreateView):
-    login_url = '/admin/login/'
+    login_url = '/accounts/login/'
     redirect_field_name = '/publisher'
     model=Publisher
     fields='__all__'
@@ -156,13 +156,13 @@ class PublisherCreateView(LoginRequiredMixin, CreateView):
     success_url = '/publisher'
 
 class PublisherDeleteView(LoginRequiredMixin, DeleteView):
-    login_url = '/admin/login/'
+    login_url = '/accounts/login/'
     redirect_field_name = '/publisher'
     model=Publisher
     success_url = '/publisher'
 
 class PublisherUpdateView(LoginRequiredMixin, UpdateView):
-    login_url = '/admin/login/'
+    login_url = '/accounts/login/'
     redirect_field_name = '/publisher'
     model=Publisher
     fields = '__all__'

@@ -1,3 +1,29 @@
+    <ul class="nav justify-content-end">
+
+      {%if user.is_authenticated%}
+      <li class="nav-item">
+        <a class="nav-link" href="/accounts/logout/">Logout</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/accounts/profile/">UserProfile</a>
+      </li>
+      {%endif%}
+
+      {%if user.is_anonymous%}
+      <li class="nav-item">
+        <a class="nav-link" href="/accounts/login/">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/accounts/register/">SignIn</a>
+      </li>
+      {%endif%}
+      
+    </ul>    
+    
+    
+    
+    
+    
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
 

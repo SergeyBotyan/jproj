@@ -4,7 +4,7 @@
 
 
 {% block title %}
-  Карточка книги
+  S-STORE | Карточка книги
 {% endblock title %}
 
 {% block pagename %}
@@ -15,7 +15,15 @@
 {% block content %}
 <a href='/book/update/{{book.pk}}/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspИЗМЕНИТЬ </a> 
 <a href='/book/delete/{{book.pk}}/' class="btn btn-danger" role="button" aria-pressed="true"> <i class="far fa-trash-alt"></i>&nbspУДАЛИТЬ </a><br>
-    {{form|crispy}}
+<br>
+<div class="card" style="width: 9rem;">
+  <img src="{{object.foto.url}}" class="card-img-top" alt="NO IMAGE">
+  <div class="card-body">
+  </div>
+</div>
+{{form|crispy}}
+ 
+    
 {% endblock content %}
 
 
