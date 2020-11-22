@@ -1,0 +1,64 @@
+{% extends "customer_base.html" %}
+
+{% block title %}
+S-STORE | Главная страница
+{% endblock title %}
+
+{% block pagename %}
+  АКЦИЯ!!!!РАСПРОДАЖА!ЧЕРНАЯ ПЯТНИЦА!
+{% endblock pagename %}
+
+   
+{% block content %}
+    {%if user.is_authenticated%}
+        Здравствуйте, {{user.first_name}} {{user.last_name}}!
+    {%endif%}
+
+    <h2>
+    <a href = '/book/'> Каталог </a> 
+    <a href = '/book/'> Выбрать поэзию </a> 
+    <a href = '/book/'> Выбрать прозу </a><br>
+    </h2>
+    
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+  
+            <tbody>
+                <div class="row">
+  
+    {% for object in object_list %}
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <div class="mx-auto my-auto">
+                    <img src='{{object.foto.url}}' class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{object.name}}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            {% for author in object.author.all %}
+                                {{ author }}
+                            {% endfor %}
+                        </li>
+                        <li class="list-group-item">Цена: {{object.price}} руб.</li>
+                        <li class="list-group-item">
+                            {% for genre in object.genre.all %}
+                                {{ genre }}
+                            {% endfor %}
+                        </li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="/book/{{object.pk}}/" class="card-link">Просмотр</a>
+                        <a href='{% url 'orders:cart'%}?book={{object.pk}}' class="btn btn-warning" role="button" aria-pressed="true"> <i class="fas fa-cart-arrow-down"></i></a> 
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+                </div>
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

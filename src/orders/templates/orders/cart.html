@@ -1,0 +1,55 @@
+{% extends "customer_base.html" %}
+
+{% block title %}
+S-STORE | Корзина
+{% endblock title %}
+
+{% block pagename %}
+  Корзина
+{% endblock pagename %}
+
+   
+{% block content %}
+    {%if user.is_authenticated%}
+        Здравствуйте, {{user.first_name}} {{user.last_name}}!
+    {%endif%}
+
+    CART ID {{cart.pk}}
+    BOOK ID {{book.pk}}{{book.name}}
+<form action="{% url 'orders:update-cart' %}" method=POST>
+  {% csrf_token %}
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+        <th scope="col">Номер</th>
+        <th scope="col">Название</th>
+        <th scope="col">Количество</th>
+        <th scope="col">Стоимость</th>
+        <th scope="col" class='text-center'>Действия</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for object in cart.books.all %}
+
+  
+    <tr>
+      <td>{{object.pk}}</td>
+      <td><a href = '/series/{{object.pk}}/'> <b>{{object}} </b></a></td>
+      <td><input type="number" value="{{object.quantity}}"></td>
+      <td><a href = '/series/{{object.pk}}/'> <b>{{object.price}} </b></a></td>
+      <td><a href='{% url 'orders:delete-book-in-cart' object.pk %}' class="btn btn-danger" role="button" aria-pressed="true"> <i class="far fa-trash-alt"></i>&nbspУДАЛИТЬ </a></td>
+    </tr>
+    {% endfor %}
+    <tr>
+    <td></td>
+    <td>Стоимость заказа</td>
+    <td></td>
+    <td>{{cart.total_price}}</td>
+    </tr>
+  </tbody>
+</table>
+<button name="submit_button" type="submit" class="btn-danger" value="checkout">Заказать</button>
+<button name="submit_button" type="submit" class="btn-danger" value="edit">Редактировать заказ</button>
+</form>
+{% endblock content %}

@@ -19,7 +19,7 @@ from django.views.generic import TemplateView
 from django.conf.urls.static import static
 from django.conf import settings
 
-from dbase.views import Select
+from dbase.views import Select, Index_Page
 from dbase.views import PublisherListView,PublisherDeleteView, PublisherDetailView, PublisherCreateView, PublisherUpdateView
 from dbase.views import SeriesListView, SeriesDeleteView, SeriesDetailView, SeriesCreateView, SeriesUpdateView
 from dbase.views import GenreListView, GenreDeleteView, GenreDetailView, GenreCreateView, GenreUpdateView
@@ -64,5 +64,7 @@ urlpatterns = [
     # accounts/ reset/done/ [name='password_reset_complete']
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('user.urls')),
-    path('', Select.as_view(), name='home')
+    path('orders/', include('orders.urls', namespace='orders')),
+    path('work/', Select.as_view(), name='work'),
+    path('', Index_Page.as_view(), name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

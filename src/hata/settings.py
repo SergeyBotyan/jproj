@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'dbase',
     'dbook',
     'user',
+    'orders',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [

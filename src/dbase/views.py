@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .models import Author, Book_series, Genre, Publisher
 from .forms import AuthorForm, GenreForm, PublisherForm, SeriesForm
 from dbook.models import Book
@@ -8,10 +8,46 @@ from django.views.generic import ListView, DetailView, CreateView, DeleteView, U
 
 # Create your views here.
 
-class Select(ListView):
+class Select(LoginRequiredMixin, ListView):
     model=Book
+    login_url = '/accounts/login/'
     ordering='-pk'
     template_name='dbase/select.html'
+
+    def get_queryset(self):
+        ordering='-pk'
+        return super().get_queryset()[0:9]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        querry = Book.objects.all()
+        books_number = Book.objects.all().count
+        active_books_number = Book.objects.all().filter(active=True).count
+        inactive_books_number = Book.objects.all().filter(active=False).count
+        price_sum = 0
+        for book in querry:
+            if book.price is not None:
+                price_sum += book.price
+            else:
+                continue
+                price_sum = 0
+        available = 0
+        for book in querry:
+            if book.books_available is not None:
+                available += book.books_available
+            else:
+                continue
+        context['books_number'] = books_number
+        context['active_books_number'] = active_books_number
+        context['inactive_books_number'] = inactive_books_number
+        context['price_sum'] = price_sum
+        context['available'] = available
+        return context
+
+class Index_Page(ListView):
+    model=Book
+    ordering='-pk'
+    template_name='index.html'
 
     def get_queryset(self):
         ordering='-pk'
@@ -85,7 +121,8 @@ class SeriesDeleteView(LoginRequiredMixin, DeleteView):
     model=Book_series
     success_url = '/series'
 
-class SeriesUpdateView(LoginRequiredMixin, UpdateView):
+class SeriesUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+    permission = 'dbase.change_book_series'
     login_url = '/accounts/login/'
     redirect_field_name = '/series'
     model=Book_series

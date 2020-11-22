@@ -1,7 +1,10 @@
 from django.db import models
+
 from dbase.models import Author, Book_series, Genre, Publisher
 
+
 def image_upload_path(instance, filename):
+    print('book_images/{0}_{1}'.format(instance.id, filename))
     return 'book_images/{0}_{1}'.format(instance.id, filename)
 
 # Create your models here.
@@ -19,10 +22,10 @@ class Book(models.Model):
         blank=True,
         null=True   
     )
-    price = models.FloatField(
+    price = models.DecimalField(
         verbose_name='Цена книги',
-        blank=True,
-        null=True   
+        decimal_places=2,
+        max_digits=5   
     )
     author = models.ManyToManyField(
         Author,
@@ -124,3 +127,6 @@ class Book(models.Model):
 
     def __str__(self):
        return f'{self.pk} {self.name}'
+
+    def __unicode__(self):
+      return self.foto.url

@@ -5,55 +5,36 @@ S-STORE | Главная страница
 {% endblock title %}
 
 {% block pagename %}
-  Выберите список
+  S-STORE ПАНЕЛЬ УПРАВЛЕНИЯ
 {% endblock pagename %}
 
    
 {% block content %}
-{%if user.is_authenticated%}
-Здравствуйте, {{user}}!
-{%endif%}
-
+  {%if user.is_authenticated%}
+    Здравствуйте, {{user}}!
     <h2>
-    <a href = '/book/'> Книги </a> <br>
-    <a href = '/author/'> Авторы </a> <br>
-    <a href = '/series/'> Книжные серии </a> <br>
-    <a href = '/genre/'> Жанры </a> <br>
-    <a href = '/publisher/'> Издательства </a> <br>
+    <a href='/book/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspКниги </a> 
+    <a href='/author/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspАвторы </a> 
+    <a href='/series/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspКнижные серии </a> 
+    <a href='/genre/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspЖанры </a> 
+    <a href='/publisher/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspИздательства </a> 
     </h2>
+  {%endif%}
+  <table class="table table-striped">
+    <tbody>
+    <div class="row">
 
-    <table class="table table-striped">
-  <thead class="thead-dark">
-    <tr>
-        <th scope="col">Номер</th>
-        <th scope="col">Название</th>
-        <th scope="col">FOTO</th>
-    </tr>
-  </thead>
-  <tbody>
-<div class="row">
+      <td>Всего в списке {{books_number}} наименований книг</td>
+
+      <td>В продаже {{active_books_number}} наименований книг</td>
+
+      <td>На складе {{available}} единиц книг.</td>
+
+      <td>Товара на сумму {{price_sum}} руб.</td>
   
-  {% for object in object_list %}
-  <div class="col-md-4">
-  <div class="card" style="width: 18rem;">
+      <td>{{inactive_books_number}} неактивно.</td>
 
-  <img src='{{object.foto.url}}' class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">{{object.name}}</h5>
     </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">{{object.author}}</li>
-    <li class="list-group-item">{{object.price}}}</li>
-    <li class="list-group-item">{{object.genre}}</li>
-  </ul>
-  <div class="card-body">
-    <a href="/book/{{object.pk}}/" class="card-link">Просмотр</a>
-    <a href="#" class="card-link">Положить в корзину</a>
-  </div>
-</div>
-</div>
-    {% endfor %}
-</div>
-  </tbody>
+    </tbody>
 </table>
 {% endblock content %}

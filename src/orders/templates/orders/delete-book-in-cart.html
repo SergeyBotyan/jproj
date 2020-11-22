@@ -1,0 +1,23 @@
+{% extends "customer_base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+S-STORE | Удаление
+{% endblock title %}
+
+{% block pagename %}
+  Удалние из корзины
+{% endblock pagename %}
+
+   
+{% block content %}
+<h1>Вы действительно хотите удалить {{object}} из корзины? </h1> 
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <button type="submit"><i class="far fa-trash-alt"></i>УДАЛИТЬ</button>  
+</form>
+
+{% endblock content %}
