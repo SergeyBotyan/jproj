@@ -15,10 +15,14 @@
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
+        {%if user.is_staff%}
         <th scope="col">Номер</th>
+        {%endif%}
         <th scope="col">Название</th>
         <th scope="col">Цена</th>
+        {%if user.is_staff%}
         <th scope="col">Активна</th>
+        {%endif%}
         <th scope="col" class='text-center'>Действия</th>
     </tr>
   </thead>
@@ -26,13 +30,21 @@
 
   {% for book in object_list %}
     <tr>
+      {%if user.is_staff%}
       <td>{{book.pk}}</td>
+      {%endif%}
       <td><a href = '/book/{{book.pk}}/'> <b>{{book.name}} </b></a></td>
       <td>{{book.price}}</td>
+      {%if user.is_staff%}
       <td>{{book.active}}</td>
-      <td class='text-center'><a href='{% url 'book-view' book.pk %}' class="btn btn-success" role="button" aria-pressed="true"> <i class="far fa-eye"></i>&nbspПРОСМОТР </a> 
+      {%endif%}
+      <td class='text-center'><a href='{% url 'book-view' book.pk %}' class="btn btn-success" role="button" aria-pressed="true"> <i class="far fa-eye"></i></a> 
+      
+      <a href='{% url 'orders:cart'%}?book={{object.pk}}' class="btn btn-warning" role="button" aria-pressed="true"> <i class="fas fa-cart-arrow-down"></i></a>
+      {%if user.is_staff%}
       <a href='/book/update/{{book.pk}}/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspИЗМЕНИТЬ </a> 
       <a href='/book/delete/{{book.pk}}/' class="btn btn-danger" role="button" aria-pressed="true"> <i class="far fa-trash-alt"></i>&nbspУДАЛИТЬ </a></td>
+      {%endif%}
     </tr>
     {% endfor %}
 

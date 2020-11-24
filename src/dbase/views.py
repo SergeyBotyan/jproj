@@ -1,3 +1,4 @@
+import requests
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -53,6 +54,16 @@ class Index_Page(ListView):
         ordering='-pk'
         return super().get_queryset()[0:9]
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #url = 'https://www.nbrb.by/api/exrates/rates/145'
+        #r = requests.get(url)
+        #r = r.json()
+        #rate = r.get.('Cur_OfficialRate')
+        #context['rate'] = rate
+        genres = Genre.objects.all()
+        context['genres'] = genres
+        return context
 
 class AuthorListView(ListView):
     model=Author

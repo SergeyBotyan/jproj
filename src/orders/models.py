@@ -72,3 +72,16 @@ class BookInCart(models.Model):
     def construct_price(self):
         price = self.quantity * self.book.price
         return price
+
+    # class Order(models.Model):
+    #     book = models.ForeignKey(
+    #         Book,
+    #         related_name='order',
+    #         on_delete=models.PROTECT,
+    #         blank=True,
+    #         null=True
+    #     )   
+    #     quantity = models.IntegerField(
+    #         'Quantity',
+    #         default=1
+    #     )     

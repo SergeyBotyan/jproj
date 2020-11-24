@@ -8,13 +8,15 @@ S-STORE | Edit Profile
 {% endblock title %}
 
 {% block pagename %}
-  Редактирование профиля пользователя {{user}}
+  Редактирование профиля пользователя {{user}} 
 {% endblock pagename %}
 
 {% block content %}
 
     <form method='POST'>
-     {{form|crispy}}
+     {{user_form|crispy}}
+     {{profile_form|crispy}}
+     {{adress_form|crispy}}
     {% csrf_token %}
     <button type='submit' class="btn btn-primary">ЗАПИСАТЬ</button>
     </form>

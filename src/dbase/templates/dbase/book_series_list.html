@@ -26,7 +26,7 @@
     <tr>
       <td>{{object.pk}}</td>
       <td><a href = '/series/{{object.pk}}/'> <b>{{object.name}} </b></a></td>
-      <td class='text-center'><a href='{% url 'series-view' object.pk %}' class="btn btn-success" role="button" aria-pressed="true"> <i class="far fa-eye"></i>&nbspПРОСМОТР </a> 
+      <td class='text-center'><a href='{% url 'dbase:series-detail' object.pk %}' class="btn btn-success" role="button" aria-pressed="true"> <i class="far fa-eye"></i>&nbspПРОСМОТР </a> 
       <a href='/series/update/{{object.pk}}/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspИЗМЕНИТЬ </a> 
       <a href='/series/delete/{{object.pk}}/' class="btn btn-danger" role="button" aria-pressed="true"> <i class="far fa-trash-alt"></i>&nbspУДАЛИТЬ </a></td>
     </tr>

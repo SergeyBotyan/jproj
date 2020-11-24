@@ -36,7 +36,7 @@ S-STORE | Корзина
     <tr>
       <td>{{object.pk}}</td>
       <td><a href = '/series/{{object.pk}}/'> <b>{{object}} </b></a></td>
-      <td><input type="number" value="{{object.quantity}}"></td>
+      <td><input type="number" name='{{ object.pk }}' value="{{object.quantity}}"></td>
       <td><a href = '/series/{{object.pk}}/'> <b>{{object.price}} </b></a></td>
       <td><a href='{% url 'orders:delete-book-in-cart' object.pk %}' class="btn btn-danger" role="button" aria-pressed="true"> <i class="far fa-trash-alt"></i>&nbspУДАЛИТЬ </a></td>
     </tr>

@@ -13,11 +13,11 @@ S-STORE | Главная страница
   {%if user.is_authenticated%}
     Здравствуйте, {{user}}!
     <h2>
-    <a href='/book/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspКниги </a> 
-    <a href='/author/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspАвторы </a> 
-    <a href='/series/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspКнижные серии </a> 
-    <a href='/genre/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspЖанры </a> 
-    <a href='/publisher/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspИздательства </a> 
+    <a href='/books/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspКниги </a> 
+    <a href='{% url 'dbase:author-list' %}' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspАвторы </a> 
+    <a href='{% url 'dbase:series-list' %}' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspКнижные серии </a> 
+    <a href='{% url 'dbase:genre-list' %}' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspЖанры </a> 
+    <a href='{% url 'dbase:publisher-list' %}' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspИздательства </a> 
     </h2>
   {%endif%}
   <table class="table table-striped">

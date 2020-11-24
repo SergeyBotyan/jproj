@@ -11,16 +11,24 @@ S-STORE | Главная страница
    
 {% block content %}
     {%if user.is_authenticated%}
-        Здравствуйте, {{user.first_name}} {{user.last_name}}!
+        Здравствуйте, {{user.get_full_name}}!
     {%endif%}
 
     <h2>
     <a href = '/book/'> Каталог </a> 
-    <a href = '/book/'> Выбрать поэзию </a> 
-    <a href = '/book/'> Выбрать прозу </a><br>
     </h2>
-    
-    
+
+    Курс доллара США к белорусскому рублю, установленный НБРБ, составляет {{ rate }}
+    <br>
+    В продаже литература разных жанров: 
+    {% for genre in genres %}
+    <li>
+    <a href='{% url 'orders:cart' %}?genre={{genre.pk}}'>{{genre}}</a>
+    </li>
+    {% endfor %}
+    <br>
+
+    <h1>Актуальные новинки</h1>
     <div class="table-responsive">
         <table class="table table-striped">
   

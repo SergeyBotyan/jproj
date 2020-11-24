@@ -91,6 +91,19 @@ class UpdateCart(RedirectView):
         else:
             #redirect to error page
             pass
-            self.request.POST.get('checkout')
+        button = self.request.POST.get('submit_button')
+        if button == 'edit':
+            obj_list = []
+            for book_in_cart_id, quantity in self.request.POST.items():
+                if book_in_cart_id not in ['csrfmiddlewaretoken', 'submit_button']:
+                    book_in_cart = BookInCart.objects.get(pk = int(book_in_cart_id))
+                    if book_in_cart.cart.pk == cart.id:
+                        book_in_cart.quantity = int(quantity)
+                        obj_list.append(book_in_cart)
+            BookInCart.objects.bulk_update(obj_list, ['quantity'])
+        elif button == 'checkout':
+            pass
+
+
 
         return reverse_lazy('orders:cart')

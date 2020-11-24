@@ -6,11 +6,13 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 
-from user.views import UserChangeForm, UserCreationForm, UserLogout
+from user.views import UserChangeForm, UserCreationForm, UserLogout, update_profile
+
+app_name = 'user'
 
 urlpatterns = [
     path('register/', UserCreationForm.as_view(), name='register'),
-    path('edit_profile/', UserChangeForm.as_view(), name='edit_profile'),
+    path('edit_profile/', update_profile, name='edit_profile'),
     path('logout/', UserLogout.as_view(), name='logout'),
-    path('profile/', UserChangeForm.as_view(), name='edit_profile'),
+    path('profile/', UserChangeForm.as_view(), name='view_profile'),
 ]
