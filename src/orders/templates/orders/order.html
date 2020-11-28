@@ -1,0 +1,53 @@
+{% extends "customer_base.html" %}
+
+{% block title %}
+S-STORE | Заказ
+{% endblock title %}
+
+{% block pagename %}
+  Заказ
+{% endblock pagename %}
+
+   
+{% block content %}
+Заказ пользователя {{user.get_full_name}}.
+
+<form action="{% url 'orders:update-cart' %}" method=POST>
+  {% csrf_token %}
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+        <th scope="col">Название</th>
+        <th scope="col">Стоимость</th>
+        <th scope="col">Количество</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for object in order.bio.all %} 
+    <tr>
+      <td><a href = '/books/{{object.pk}}/'> <b>{{object.book.name}}</b></a></td>
+      <td><b>{{object.price}} </b></a></td>
+      <td><b>{{object.quantity}} </b></a></td>
+    </tr>
+    {% endfor %}
+    <tr>
+    <td>Стоимость заказа</td>
+    <td>{{order.total_price}}</td>
+    <td></td>
+    </tr>
+  </tbody>
+</table>
+<button name="submit_button" type="submit" class="btn-danger" value="checkout">Подтвердить заказ</button>
+<button name="submit_button" type="submit" class="btn-danger" value="edit">Вернуться к корзине</button>
+</form>
+<br>
+<h3> Адрес доставки: </h3>
+{{order.adress.adress|default_if_none:"Заполните информацию о вашем адресе в профиле."}}
+<h3>Контактный телефон: </h3>
+{{user.profile.phone1|default_if_none:"Добавьте ваш телефон в профиль"}}
+{{user.profile.phone2|default_if_none:"-"}}
+
+
+
+{% endblock content %}

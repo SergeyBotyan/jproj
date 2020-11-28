@@ -23,7 +23,7 @@ S-STORE | Главная страница
     В продаже литература разных жанров: 
     {% for genre in genres %}
     <li>
-    <a href='{% url 'orders:cart' %}?genre={{genre.pk}}'>{{genre}}</a>
+    <a href='/book/g-view/?genre={{genre.pk}}'>{{genre}}</a>
     </li>
     {% endfor %}
     <br>
@@ -57,7 +57,7 @@ S-STORE | Главная страница
                         </li>
                     </ul>
                     <div class="card-body">
-                        <a href="/book/{{object.pk}}/" class="card-link">Просмотр</a>
+                        <a href="/book/{{object.pk}}/" class="btn btn-warning"><i class="far fa-eye"></i></a>
                         <a href='{% url 'orders:cart'%}?book={{object.pk}}' class="btn btn-warning" role="button" aria-pressed="true"> <i class="fas fa-cart-arrow-down"></i></a> 
                     </div>
 

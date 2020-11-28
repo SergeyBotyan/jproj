@@ -14,8 +14,6 @@ S-STORE | Корзина
         Здравствуйте, {{user.first_name}} {{user.last_name}}!
     {%endif%}
 
-    CART ID {{cart.pk}}
-    BOOK ID {{book.pk}}{{book.name}}
 <form action="{% url 'orders:update-cart' %}" method=POST>
   {% csrf_token %}
 <table class="table table-striped">

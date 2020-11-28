@@ -114,7 +114,8 @@ class Book(models.Model):
     rating = models.FloatField(
         verbose_name='Рейтинг книги',
         blank=False,
-        null=False
+        null=False,
+        default=0
     )
     add_date = models.DateField(
         auto_now_add=True,

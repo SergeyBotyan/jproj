@@ -20,7 +20,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from dbase.views import Select, Index_Page
-from dbook.views import BookListView, BookCreateView, BookDetailView, BookDeleteView, BookUpdateView
+from dbook.views import BookListView, BookCreateView
+from dbook.views import BookDetailView, BookDeleteView, BookUpdateView, BookGView
 from user.views import UserChangeForm, UserCreationForm
 
 urlpatterns = [
@@ -30,6 +31,7 @@ urlpatterns = [
     path('book/create/', BookCreateView.as_view()),
     path('book/update/<int:pk>/', BookUpdateView.as_view()),
     path('book/delete/<int:pk>/', BookDeleteView.as_view()),
+    path('book/g-view/', BookGView.as_view()),
     path('dbase/', include('dbase.urls', namespace='dbase')),
     # accounts/ login/ [name='login']
     # accounts/ logout/ [name='logout']
