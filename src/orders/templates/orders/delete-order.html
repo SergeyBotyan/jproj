@@ -8,18 +8,16 @@ S-STORE | Удаление
 {% endblock title %}
 
 {% block pagename %}
-  Удалние из корзины
+  Удалние заказа
 {% endblock pagename %}
 
    
 {% block content %}
-<h1>Вы действительно хотите удалить {{object}} из корзины? </h1> 
+<h1>Вы действительно хотите удалить заказ {{object}} ? </h1> 
 
 <form action="" method="POST">
     {% csrf_token %}
     <button type="submit"><i class="far fa-trash-alt"></i>УДАЛИТЬ</button>  
 </form>
-<br>
-    <button type="submit"> <a href='{% url 'orders:cart'%}' <i class="far fa-trash-alt"></i>ОТМЕНА&nbsp</a></button>
 
 {% endblock content %}

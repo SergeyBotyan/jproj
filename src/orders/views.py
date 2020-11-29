@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DeleteView, RedirectView
+from django.views.generic import ListView, DeleteView, RedirectView, DetailView, UpdateView
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -109,7 +109,6 @@ class UpdateCart(RedirectView):
             if user.is_anonymous:
                 # redirect to create user
                 return reverse_lazy('accounts:register')
-            
             if user.adress:
                 new_order = Order.objects.create(
                     user=user,
@@ -118,7 +117,6 @@ class UpdateCart(RedirectView):
                     total_price=0,
                     status=1
                 )
-                new_order.save()
                 session = self.request.session
                 session['order_id'] = new_order.pk
                 #making book_in_order
@@ -135,9 +133,9 @@ class UpdateCart(RedirectView):
                 cost = new_order.get_total_price()
                 new_order.total_price = cost
                 new_order.save()
-                cart.delete()
-                session['cart_id'] = None
                 return reverse_lazy('orders:order-view')
+            else:
+                reverse_lazy('accounts:edit_profile')
         return reverse_lazy('orders:cart')
 
 class OrderView(LoginRequiredMixin, ListView):
@@ -169,14 +167,55 @@ class OrderView(LoginRequiredMixin, ListView):
         if context_object_name is not None:
             context[context_object_name] = queryset
         context.update(kwargs)
-        # orders context include
-        order_id = self.request.session.get('order_id')
-        user = self.request.user            
+        user = self.request.user 
+        session = self.request.session
+        order_id = self.request.session.get('order_id')          
         if order_id:
-            order = Order.objects.filter(pk=order_id).last()
+            order = Order.objects.get(pk=order_id)
             context['order'] = order           
             context['user'] = user
-
         else:
             return reverse_lazy('orders:cart')
         return super().get_context_data(**context)
+
+class OrderCheckout(RedirectView):
+    def get_redirect_url(self):
+        # orders context include
+        user = self.request.user 
+        session = self.request.session
+        cart_id = self.request.session.get('cart_id')
+        cart = Cart.objects.get(pk=cart_id)
+        order_id = self.request.session.get('order_id') 
+        order = Order.objects.get(pk=order_id)         
+        button = self.request.POST.get('submit_button')
+        if button == 'edit':
+            order.delete()
+            return reverse_lazy('orders:cart')
+        if button == 'checkout':
+            cart.delete()
+            session['cart_id'] = {}
+            self.request.session.modified = True
+            return reverse_lazy('accounts:view_profile')
+
+class DeleteOrder(DeleteView):
+    model=Order
+    template_name='orders/delete-order.html'
+    success_url = reverse_lazy('accounts:view_profile')
+
+    def get_success_url(self):
+        user = self.request.user
+        if user.is_staff:
+            success_url= '/work'
+            return success_url.format(**self.object.__dict__)
+        if self.success_url:
+            return self.success_url.format(**self.object.__dict__)
+        else:
+            raise ImproperlyConfigured(
+            "No URL to redirect to. Provide a success_url.")
+
+class OrderEditView(UpdateView):
+    model=Order
+    fields = '__all__'
+    success_url = '/work'
+    template_name = 'orders/order-edit-view.html'
+    template_name_suffix = '_update_form'

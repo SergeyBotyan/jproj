@@ -1,0 +1,24 @@
+{% extends "customer_base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+  Заказ
+{% endblock title %}
+
+{% block pagename %}
+  Заказ
+{% endblock pagename %}
+
+   
+{% block content %}
+    <form method='POST'>
+     {{form|crispy}}
+    {% csrf_token %}
+    {%if user.is_staff%}
+    <button type='submit' class="btn btn-primary">ЗАПИСАТЬ</button>
+    {%endif%}
+    </form>
+{% endblock content %}
+ 

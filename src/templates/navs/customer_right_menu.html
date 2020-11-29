@@ -4,6 +4,7 @@
         <a class="nav-link" href="/orders/">Корзина</a>
       </li>
 
+
       {%if user.is_staff%}
       <li class="nav-item">
         <a class="nav-link" href="/work/">Управление</a>
@@ -15,7 +16,7 @@
         <a class="nav-link" href="/accounts/logout/">Logout</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/accounts/edit_profile/">UserProfile</a>
+        <a class="nav-link" href="/accounts/profile/">UserProfile</a>
       </li>
       {%endif%}
 

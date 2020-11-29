@@ -37,4 +37,22 @@ S-STORE | Главная страница
     </div>
     </tbody>
 </table>
+ <h3> Активные заказы </h3>
+<table class="table table-striped">
+  <tbody>
+    
+    {% for object in orders %} 
+    <tr>
+      <td><a href = '{% url 'orders:edit-order' object.pk %}'> <b>{{object}}</b></a></td>
+      <td><b>{{object.status}} </b></a></td>
+      <td><b>{{object.total_price}} </b></a></td>
+      <td><b>{{object.created_date}} </b></a></td>
+      <td><a href='{% url 'orders:delete-order' object.pk %}' class="btn btn-danger" role="button" aria-pressed="true"> <i class="far fa-trash-alt"></i></a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+    
+
+
 {% endblock content %}

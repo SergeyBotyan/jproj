@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DetailView, TemplateView
 from django.urls import reverse_lazy
 
 from .forms import SignUpForm, UserForm, ProfileForm, AdressForm
@@ -16,13 +16,21 @@ class UserCreationForm(generic.CreateView):
     template_name='registration/registration.html'
     success_url = reverse_lazy('login')
 
-class UserChangeForm(generic.UpdateView):
-    form_class=SignUpForm
-    template_name='registration/edit_profile.html'
-    success_url = reverse_lazy('home')
+@login_required
+def profile_view(request):
+    user = request.user
+    profile = request.user.profile
+    adress = request.user.adress.first()
+    if not profile:
+        return reverse_lazy('accounts:edit-profile')
+    return render(request, 'registration/view_profile.html', {
+        'user': user,
+        'profile': profile,
+        'adress': adress
+    })
 
-    def get_object(self):
-        return self.request.user
+
+
 
 class UserLogout(LogoutView):
     next_page = reverse_lazy('home')

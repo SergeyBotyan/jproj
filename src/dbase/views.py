@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from .models import Author, Book_series, Genre, Publisher
 from .forms import AuthorForm, GenreForm, PublisherForm, SeriesForm
 from dbook.models import Book
+from orders.models import Order, BookInOrder, Cart
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, View
 
 # Create your views here.
@@ -26,6 +27,10 @@ class Select(LoginRequiredMixin, ListView):
         books_number = Book.objects.all().count
         active_books_number = Book.objects.all().filter(active=True).count
         inactive_books_number = Book.objects.all().filter(active=False).count
+        orders = Order.objects.all()
+        formed_orders_count = Order.objects.filter(status = 1).count
+        active_orders_count = Order.objects.filter(status__gt = 1, status__lt = 4).count
+        finished_orders_count = Order.objects.filter(status = 4)
         price_sum = 0
         for book in querry:
             if book.price is not None:
@@ -39,6 +44,10 @@ class Select(LoginRequiredMixin, ListView):
                 available += book.books_available
             else:
                 continue
+        context['orders'] = orders
+        context['formed_orders_count'] = formed_orders_count
+        context['active_orders_count'] = active_orders_count
+        context['finished_orders_count'] = finished_orders_count
         context['books_number'] = books_number
         context['active_books_number'] = active_books_number
         context['inactive_books_number'] = inactive_books_number

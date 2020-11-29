@@ -14,10 +14,6 @@ S-STORE | Главная страница
         Здравствуйте, {{user.get_full_name}}!
     {%endif%}
 
-    <h2>
-    <a href = '/book/'> Каталог </a> 
-    </h2>
-
     Курс доллара США к белорусскому рублю, установленный НБРБ, составляет {{ rate }}
     <br>
     В продаже литература разных жанров: 
@@ -37,7 +33,7 @@ S-STORE | Главная страница
   
     {% for object in object_list %}
         <div class="col-md-4">
-            <div class="card" style="width: 18rem;">
+            <div class="card">
                 <div class="mx-auto my-auto">
                     <img src='{{object.foto.url}}' class="card-img-top" alt="...">
                     <div class="card-body">

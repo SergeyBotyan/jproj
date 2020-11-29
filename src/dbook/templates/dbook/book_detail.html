@@ -13,8 +13,10 @@
 
    
 {% block content %}
+{%if user.is_staff%}
 <a href='/book/update/{{book.pk}}/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspИЗМЕНИТЬ </a> 
 <a href='/book/delete/{{book.pk}}/' class="btn btn-danger" role="button" aria-pressed="true"> <i class="far fa-trash-alt"></i>&nbspУДАЛИТЬ </a><br>
+{%endif%}
 <br>
 <div class="card" style="width: 9rem;">
   <img src="{{object.foto.url}}" class="card-img-top" alt="NO IMAGE">

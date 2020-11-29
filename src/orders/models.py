@@ -77,7 +77,7 @@ class BookInCart(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(
         User,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         related_name='orders'
     )
     profile = models.ForeignKey(
@@ -124,7 +124,7 @@ class Order(models.Model):
         verbose_name_plural = 'Заказы'
 
     def __str__(self):
-        return f'Order - {self.id} - {self.created_date}'
+        return f'Заказ №{self.id}'
 
     def get_total_price(self):
         cost = 0

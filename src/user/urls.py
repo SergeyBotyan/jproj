@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 
-from user.views import UserChangeForm, UserCreationForm, UserLogout, update_profile
+from user.views import profile_view, UserCreationForm, UserLogout, update_profile
 
 app_name = 'user'
 
@@ -14,5 +14,5 @@ urlpatterns = [
     path('register/', UserCreationForm.as_view(), name='register'),
     path('edit_profile/', update_profile, name='edit_profile'),
     path('logout/', UserLogout.as_view(), name='logout'),
-    path('profile/', UserChangeForm.as_view(), name='view_profile'),
+    path('profile/', profile_view, name='view_profile'),
 ]

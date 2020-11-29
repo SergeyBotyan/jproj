@@ -1,0 +1,46 @@
+{% extends "login_base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+S-STORE | Edit Profile
+{% endblock title %}
+
+{% block pagename %}
+  Профиль пользователя {{user.get_full_name}} 
+{% endblock pagename %}
+
+{% block content %}
+      {%if orders%}
+        <a href="/orders/order">Заказы</a>
+        <a href="/accounts/edit-profile">Редактировать профиль</a>
+      {%endif%}
+     Пользователь
+     <h4>{{user.get_full_name}}</h4>
+     Электронная почта
+     <h4>{{user.email|default_if_none:"-"}}</h4>
+     Телефон
+     <h4>{{profile.phone1|default_if_none:"-"}}</h4>
+     Информация
+     <h4>{{profile.information|default_if_none:"-"}}</h4>
+     Город
+     <h4>{{adress.sity|default_if_none:"-"}}</h4>
+     Адрес доставки
+     <h4>{{adress.adress|default_if_none:"-"}}</h4>
+
+<h4 just>Заказы:</h4>
+<table class="table table-striped">
+  <tbody>
+{%for object in user.orders.all%}
+    <tr>
+      <td><a href = '{% url 'orders:edit-order' object.pk %}'> <b>{{object}}</b></a></td>
+      <td><b>{{object.status}} </b></a></td>
+      <td><b>{{object.total_price}} </b></a></td>
+      <td><b>{{object.created_date}} </b></a></td>
+      <td><a href='{% url 'orders:delete-order' object.pk %}' class="btn btn-danger" role="button" aria-pressed="true"> <i class="far fa-trash-alt"></i></a></td>
+    </tr>
+{%endfor%}
+  </tbody>
+</table>
+{% endblock %}
