@@ -22,7 +22,7 @@ def profile_view(request):
     profile = request.user.profile
     adress = request.user.adress.first()
     if not profile:
-        return reverse_lazy('accounts:edit-profile')
+        return reverse_lazy('accounts:edit-profile', user.pk)
     return render(request, 'registration/view_profile.html', {
         'user': user,
         'profile': profile,
