@@ -203,7 +203,7 @@ class OrderCheckout(RedirectView):
                     if reciever.is_staff:
                         mail_reciever.append(reciever.email)
                 send_mail(
-                    f'Новый заказ на сумму {order.price}',
+                    f'Новый заказ на сумму {order.total_price}',
                     f'Поступил новый заказ {order}',
                     'from@example.com',
                     mail_reciever,
