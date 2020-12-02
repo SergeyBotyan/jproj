@@ -95,18 +95,25 @@ class Order(models.Model):
         decimal_places=2,
         max_digits=5        
     )
-    status_choises = (
-    (1, 'Заказ сформирован'),
-    (2, 'Заказ подтвержден'),
-    (3, 'Заказ выполняется'),
-    (4, 'Заказ выполнен')
+    status_choices = (
+    ('1 - Сформирован', '1 - Сформирован'),
+    ('2 - Подтвержден', '2 - Подтвержден'),
+    ('3 - Выполняется', '3 - Выполняется'),
+    ('4 - Выполнен', '4 - Выполнен')
     )
-    status = models.IntegerField(
+    status = models.CharField(
         verbose_name='Статус заказа',
-        choices=status_choises,
-        default=1,
+        max_length=15,
+        choices=status_choices,
+        default='1 - Сформирован',
         blank=False,
         null=False
+    )
+    information = models.CharField(
+        verbose_name='Дополнительная информация',
+        max_length=200,
+        blank=True,
+        null=True
     )
     created_date = models.DateTimeField(
         verbose_name='Дата создания',
@@ -129,8 +136,7 @@ class Order(models.Model):
     def get_total_price(self):
         cost = 0
         for bio in self.bio.all():
-            print(bio.quantity)
-            cost += bio.get_cost()
+            cost += bio.price
         return cost
 
 

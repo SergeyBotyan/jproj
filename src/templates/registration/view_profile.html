@@ -14,8 +14,8 @@ S-STORE | Edit Profile
 {% block content %}
       {%if orders%}
         <a href="/orders/order">Заказы</a>
-        <a href="/accounts/edit-profile">Редактировать профиль</a>
       {%endif%}
+      <a href="/accounts/edit-profile">Редактировать профиль</a><br>
      Пользователь
      <h4>{{user.get_full_name}}</h4>
      Электронная почта
@@ -31,6 +31,15 @@ S-STORE | Edit Profile
 
 <h4 just>Заказы:</h4>
 <table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+        <th scope="col">Заказ</th>
+        <th scope="col">Статус</th>
+        <th scope="col">Сумма</th>
+        <th scope="col">Дата создания</th>
+        <th scope="col">Действия</th>
+    </tr>
+  </thead>
   <tbody>
 {%for object in user.orders.all%}
     <tr>

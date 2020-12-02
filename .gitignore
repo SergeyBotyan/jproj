@@ -139,6 +139,11 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+
+
+# my
+*.jpg
 =======
 clock/__pycache__/print_digits.cpython-38.pyc
 >>>>>>> c297a556d6eae8a326c92681ea96729cce01375e

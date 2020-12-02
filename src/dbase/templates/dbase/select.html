@@ -13,12 +13,13 @@ S-STORE | Главная страница
   {%if user.is_authenticated%}
     Здравствуйте, {{user}}!
     <h2>
-    <a href='/books/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspКниги </a> 
+    <a href='/book/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspКниги </a> 
     <a href='{% url 'dbase:author-list' %}' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspАвторы </a> 
     <a href='{% url 'dbase:series-list' %}' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspКнижные серии </a> 
     <a href='{% url 'dbase:genre-list' %}' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspЖанры </a> 
     <a href='{% url 'dbase:publisher-list' %}' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspИздательства </a> 
-    </h2>
+    <a href='{% url 'accounts:user-list' %}' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspПользователи </a> 
+  </h2>
   {%endif%}
   <table class="table table-striped">
     <tbody>
@@ -41,9 +42,10 @@ S-STORE | Главная страница
 <table class="table table-striped">
   <tbody>
     
-    {% for object in orders %} 
+    {% for object in page_obj %} 
     <tr>
-      <td><a href = '{% url 'orders:edit-order' object.pk %}'> <b>{{object}}</b></a></td>
+      <td><a href = '{% url 'orders:adm-edit-order' object.pk %}'> <b>{{object}}</b></a></td>
+      <td><b>{{object.user.username}} </b></a></td>
       <td><b>{{object.status}} </b></a></td>
       <td><b>{{object.total_price}} </b></a></td>
       <td><b>{{object.created_date}} </b></a></td>
@@ -52,6 +54,22 @@ S-STORE | Главная страница
     {% endfor %}
   </tbody>
 </table>
+
+
+    <br>
+    <div class="pagination">
+        <span class="page-links">
+          {% if page_obj.has_previous %}
+            <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Предыдущая страница</a>
+          {% endif %}
+            <span class="page-current">
+            Страница № {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+            </span>
+          {% if page_obj.has_next %}
+            <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">Следующая страница</a>
+          {% endif %}
+        </span>
+    </div>
     
 
 

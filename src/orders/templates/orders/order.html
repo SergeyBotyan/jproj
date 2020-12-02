@@ -13,6 +13,7 @@ S-STORE | Заказ
 Заказ пользователя {{user.get_full_name}}.
 
 <form action="{% url 'orders:order-checkout' %}" method=POST>
+  
   {% csrf_token %}
 <table class="table table-striped">
   <thead class="thead-dark">
@@ -38,6 +39,11 @@ S-STORE | Заказ
     </tr>
   </tbody>
 </table>
+
+<div class="form-group">
+  <label for="information">Дополнительная информация</label>
+  <textarea class="form-control" name="information" rows="3"></textarea>
+</div>
 <button name="submit_button" type="submit" class="btn-danger" value="checkout">Подтвердить заказ</button>
 <button name="submit_button" type="submit" class="btn-danger" value="edit">Вернуться к корзине</button>
 </form>
@@ -47,7 +53,5 @@ S-STORE | Заказ
 <h3>Контактный телефон: </h3>
 {{user.profile.phone1|default_if_none:"Добавьте ваш телефон в профиль"}}
 {{user.profile.phone2|default_if_none:"-"}}
-
-
 
 {% endblock content %}

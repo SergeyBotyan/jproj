@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.views.generic import ListView, DeleteView, RedirectView, DetailView, UpdateView
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
@@ -115,7 +116,7 @@ class UpdateCart(RedirectView):
                     profile=user.profile,
                     adress=user.adress.first(),
                     total_price=0,
-                    status=1
+                    status='1 - Сформирован'
                 )
                 session = self.request.session
                 session['order_id'] = new_order.pk
@@ -188,12 +189,29 @@ class OrderCheckout(RedirectView):
         order_id = self.request.session.get('order_id') 
         order = Order.objects.get(pk=order_id)         
         button = self.request.POST.get('submit_button')
+        information = self.request.POST.get('information')
         if button == 'edit':
             order.delete()
             return reverse_lazy('orders:cart')
         if button == 'checkout':
+            if information:
+                order.information = information
+                order.save()
+                mail_reciever = []
+                users = User.objects.all()
+                for reciever in users:
+                    if reciever.is_staff:
+                        mail_reciever.append(reciever.email)
+                send_mail(
+                    f'Новый заказ на сумму {order.price}',
+                    f'Поступил новый заказ {order}',
+                    'from@example.com',
+                    mail_reciever,
+                    fail_silently=True,
+                    )
             cart.delete()
             session['cart_id'] = {}
+            session['order_id'] = {}
             self.request.session.modified = True
             return reverse_lazy('accounts:view_profile')
 
@@ -215,7 +233,39 @@ class DeleteOrder(DeleteView):
 
 class OrderEditView(UpdateView):
     model=Order
-    fields = '__all__'
-    success_url = '/work'
+    fields = ['information']
+    success_url = 'accounts:viev_profile'
     template_name = 'orders/order-edit-view.html'
     template_name_suffix = '_update_form'
+
+class OrderAdmEditView(UpdateView):
+    model=Order
+    fields = '__all__'
+    success_url = 'accounts:'
+    template_name = 'orders/order-edit-view.html'
+    template_name_suffix = '_update_form'
+    def get_context_data(self, **kwargs):
+        context = {}
+        if self.object:
+            context['object'] = self.object
+            context_object_name = self.get_context_object_name(self.object)
+            if context_object_name:
+                context[context_object_name] = self.object
+        context.update(kwargs)
+        return super().get_context_data(**context)
+
+class DeleteBookInOrder(DeleteView):
+    model=BookInOrder
+    template_name='orders/delete-bio.html'
+    success_url = reverse_lazy('accounts:edit-order')
+
+    def get_success_url(self):
+        user = self.request.user
+        if user.is_staff:
+            success_url= '/work'
+            return success_url.format(**self.object.__dict__)
+        if self.success_url:
+            return self.success_url.format(**self.object.__dict__)
+        else:
+            raise ImproperlyConfigured(
+            "No URL to redirect to. Provide a success_url.")

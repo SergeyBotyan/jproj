@@ -65,4 +65,47 @@ S-STORE | Главная страница
             </tbody>
         </table>
     </div>
+
+
+        <h1>Самые популярные книги</h1>
+    <div class="table-responsive">
+        <table class="table table-striped">
+  
+            <tbody>
+                <div class="row">
+  
+    {% for object in popular %}
+        <div class="col-md-4">
+            <div class="card">
+                <div class="mx-auto my-auto">
+                    <img src='{{object.foto.url}}' class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{object.name}}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            {% for author in object.author.all %}
+                                {{ author }}
+                            {% endfor %}
+                        </li>
+                        <li class="list-group-item">Цена: {{object.price}} руб.</li>
+                        <li class="list-group-item">
+                            {% for genre in object.genre.all %}
+                                {{ genre }}
+                            {% endfor %}
+                        </li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="/book/{{object.pk}}/" class="btn btn-warning"><i class="far fa-eye"></i></a>
+                        <a href='{% url 'orders:cart'%}?book={{object.pk}}' class="btn btn-warning" role="button" aria-pressed="true"> <i class="fas fa-cart-arrow-down"></i></a> 
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+                </div>
+            </tbody>
+        </table>
+    </div>
 {% endblock content %}

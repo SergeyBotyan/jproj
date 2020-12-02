@@ -1,22 +1,25 @@
 {% extends "customer_base.html" %}
 
 {% block title %}
- Список жанров
+Список пользователей
 {% endblock title %}
 
 {% block pagename %}
-  Список жанров
+  Список пользователей
 {% endblock pagename %}
 
    
 {% block content %}
- <a href="/genre/create" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Создать</a>
+ 
     
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
         <th scope="col">Номер</th>
-        <th scope="col">Название</th>
+        <th scope="col">Полное имя</th>
+        <th scope="col">Username</th>
+        <th scope="col">Администратор</th>
+        <th scope="col">Последний вход</th>
         <th scope="col" class='text-center'>Действия</th>
     </tr>
   </thead>
@@ -25,10 +28,13 @@
   {% for object in object_list %}
     <tr>
       <td>{{object.pk}}</td>
-      <td><a href = '/genre/{{object.pk}}/'> <b>{{object.name}} </b></a></td>
-      <td class='text-center'><a href='{% url 'dbase:genre-detail' object.pk %}' class="btn btn-success" role="button" aria-pressed="true"> <i class="far fa-eye"></i>&nbspПРОСМОТР </a> 
-      <a href='/genre/update/{{object.pk}}/' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i>&nbspИЗМЕНИТЬ </a> 
-      <a href='/genre/delete/{{object.pk}}/' class="btn btn-danger" role="button" aria-pressed="true"> <i class="far fa-trash-alt"></i>&nbspУДАЛИТЬ </a></td>
+      <td><a href = '{% url 'accounts:edit-profile-adm' object.pk%}'> <b>{{object.get_full_name}} </b></a></td>
+      <td><b>{{object.username}} </b></td>
+      <td><b>{{object.is_staff}} </b></td>
+      <td><b>{{object.last_login}} </b></td>
+      <td class='text-center'><a href='{% url 'dbase:series-detail' object.pk %}' class="btn btn-success" role="button" aria-pressed="true"> <i class="far fa-eye"></i> </a> 
+      <a href='{% url 'accounts:edit-profile-adm' object.pk%}' class="btn btn-warning" role="button" aria-pressed="true"> <i class="far fa-edit"></i> </a> 
+      <a href='{% url 'accounts:user-delete' object.pk %}' class="btn btn-danger" role="button" aria-pressed="true"> <i class="far fa-trash-alt"></i> </a></td>
     </tr>
     {% endfor %}
 

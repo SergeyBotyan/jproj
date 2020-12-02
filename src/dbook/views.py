@@ -10,7 +10,7 @@ from dbase.models import Genre
 
 class BookListView(ListView):
     model=Book
-#    paginate_by = 20
+    paginate_by = 20
     template_name='dbook/book_list.html'
 
 class BookGView(ListView):

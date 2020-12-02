@@ -1,4 +1,6 @@
 import requests
+from django.core.paginator import Paginator
+from django.db.models import Q
 from requests.exceptions import ConnectionError
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -12,14 +14,15 @@ from django.views.generic import ListView, DetailView, CreateView, DeleteView, U
 # Create your views here.
 
 class Select(LoginRequiredMixin, ListView):
-    model=Book
+    model=Order
+    paginate_by = 20
     login_url = '/accounts/login/'
     ordering='-pk'
     template_name='dbase/select.html'
 
     def get_queryset(self):
         ordering='-pk'
-        return super().get_queryset()[0:9]
+        return super().get_queryset()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,9 +31,11 @@ class Select(LoginRequiredMixin, ListView):
         active_books_number = Book.objects.all().filter(active=True).count
         inactive_books_number = Book.objects.all().filter(active=False).count
         orders = Order.objects.all()
-        formed_orders_count = Order.objects.filter(status = 1).count
-        active_orders_count = Order.objects.filter(status__gt = 1, status__lt = 4).count
-        finished_orders_count = Order.objects.filter(status = 4)
+        formed_orders_count = Order.objects.filter(status = '1 - Сформирован').count
+        f1 = Q(status = '2 - Подтвержден')
+        f2 = Q(status = '3 - Выполняется')
+        active_orders_count = Order.objects.filter(f1|f2).count
+        finished_orders_count = Order.objects.filter(status = '4 - Выполнен')
         price_sum = 0
         for book in querry:
             if book.price is not None:
@@ -74,6 +79,8 @@ class Index_Page(ListView):
         except ConnectionError:
             rate = "No connection"
         context['rate'] = rate
+        popular = Book.objects.all().order_by('rating')[0:9]
+        context['popular'] = popular
         genres = Genre.objects.all()
         context['genres'] = genres
         return context

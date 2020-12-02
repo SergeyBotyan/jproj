@@ -17,7 +17,7 @@ class SignUpForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ('first_name', 'last_name', 'email')
 
 class ProfileForm(forms.ModelForm):
     class Meta:
@@ -25,6 +25,21 @@ class ProfileForm(forms.ModelForm):
         fields = ('phone1', 'phone2', 'information')
 
 class AdressForm(forms.ModelForm):
+    class Meta:
+        model = Adress
+        fields = ('country', 'sity', 'post_index', 'adress')
+
+class UserAdmForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'is_staff')
+
+class ProfileAdmForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('phone1', 'phone2', 'information')
+
+class AdressAdmForm(forms.ModelForm):
     class Meta:
         model = Adress
         fields = ('country', 'sity', 'post_index', 'adress')

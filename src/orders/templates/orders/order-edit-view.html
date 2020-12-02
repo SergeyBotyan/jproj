@@ -13,12 +13,71 @@
 
    
 {% block content %}
+{%if user.is_staff%}    
     <form method='POST'>
-     {{form|crispy}}
+    {{form|crispy}}
     {% csrf_token %}
-    {%if user.is_staff%}
     <button type='submit' class="btn btn-primary">ЗАПИСАТЬ</button>
-    {%endif%}
+</form>
+    <form action='' method=POST>
+    {% csrf_token %}
+       <h3>Товары в заказе:</h3>
+    <table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+        <th scope="col">Название</th>
+        <th scope="col">Стоимость</th>
+        <th scope="col">Количество</th>
+        <th scope="col">Удалить из заказа</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for object in object.bio.all %} 
+    <tr>
+      <td><a href = '/books/{{object.pk}}/'> <b>{{object.book.name}}</b></a></td>
+      <td><b>{{object.price}} </b></a></td>
+      <td><input type="number" name='{{ object.pk }}' value="{{object.quantity}}"></td>
+      <td><a href='{% url 'orders:delete-book-in-order' object.pk %}' class="btn btn-danger" role="button" aria-pressed="true"> <i class="far fa-trash-alt"></i> </a></td>
+    </tr>
+    {% endfor %}
+      </tbody>
+    </table>
+    <button type='submit' class="btn btn-primary">ИЗМЕНИТЬ СОСТАВ ЗАКАЗА</button>
     </form>
+ 
+{%endif%}
+{%if not user.is_staff%}
+{{object}} на сумму {{object.total_price}} руб.<br>
+<h3>Информация о заказе</h3>
+{{object.information|default_if_none:"-"}}<br>
+<h3>Статус заказа:</h3>
+{{object.status}}<br>
+<h3>Адрес доставки: <a href = '{% url 'accounts:edit-profile' %}'> <b>(изменить)</b></a></h3>
+{{object.adress.adress}}<br>
+
+   <h3>Товары в заказе:</h3>
+    <table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+        <th scope="col">Название</th>
+        <th scope="col">Стоимость</th>
+        <th scope="col">Количество</th>
+        <th scope="col">Удалить из заказа</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for object in object.bio.all %} 
+    <tr>
+      <td><a href = '/books/{{object.pk}}/'> <b>{{object.book.name}}</b></a></td>
+      <td><b>{{object.price}} </b></a></td>
+      <td><b>{{object.quantity}} </b></a></td>
+      <td><a href='{% url 'orders:delete-book-in-order' object.pk %}' class="btn btn-danger" role="button" aria-pressed="true"> <i class="far fa-trash-alt"></i> </a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{%endif%}
 {% endblock content %}
  

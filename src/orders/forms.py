@@ -6,3 +6,9 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = models.Order
         fields = ('__all__')
+
+class BIOForm(forms.ModelForm):
+
+    class Meta:
+        model = models.BookInOrder
+        fields = ('__all__')
