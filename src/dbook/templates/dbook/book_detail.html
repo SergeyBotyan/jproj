@@ -23,8 +23,34 @@
   <div class="card-body">
   </div>
 </div>
+{%if user.is_staff%}
 {{form|crispy}}
- 
+{%endif%}
+
+{%if not user.is_staff%}
+Название: {{object.name}}<br>
+Авторы:
+{% for author in object.author.all %}
+  {{ author }}
+{% endfor %}<br>
+Цена
+{{object.price}}<br>
+Серия:
+{{object.series|default_if_none:"-"}}<br>
+Жанры:
+{% for genre in object.genre.all %}
+  {{ genre|default_if_none:"-" }}
+{% endfor %}<br>
+Год издания:
+{{object.publication_year|default_if_none:"-"}}<br>
+Возрастные ограничения:
+{{object.age_limit|default_if_none:"-"}}<br>
+Издателство:
+{{object.publisher|default_if_none:"-"}}<br>
+
+<a href='{% url 'orders:cart'%}?book={{book.pk}}' class="btn btn-warning" role="button" aria-pressed="true"> <i class="fas fa-cart-arrow-down"></i></a>
+{%endif%}
+
     
 {% endblock content %}
 
