@@ -48,6 +48,10 @@ def update_profile(request):
             messages.success(request, ('Ваш профиль был успешно обновлен!'))
             return redirect('accounts:view_profile')
         else:
+            print(request.POST)
+            print(request.user)
+            print(request.user.profile)
+            print(request.user.adress.first())
             messages.error(request, _('Пожалуйста, исправьте ошибки.'))       
     else:
         user = request.user
@@ -55,17 +59,14 @@ def update_profile(request):
         adress = request.user.adress.first()
         if not profile:
             new_profile = Profile.objects.create(
-                user=user, 
-                phone1=None, 
-                phone2=None, 
-                information=None)
+                user=user
+                )
             new_profile.save()
         if not adress:
             new_adress = Adress.objects.create(
                 user=user, 
                 country='Укажите страну', 
-                sity='Укажите город', 
-                post_index=None, 
+                sity='Укажите город',  
                 adress='Укажите адрес')
             new_adress.save()
         user_form = UserForm(instance=request.user)
@@ -113,6 +114,43 @@ class AdmUpdateProfile(generic.RedirectView):
         else:
            messages.error(request, ('Пожалуйста, исправьте ошибки.'))
         return reverse_lazy('accounts:user-list')
+
+class UserView(generic.DetailView):
+    model = User
+
+    template_name = 'registration/edit_profile.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        ed_user =  User.objects.get(pk=pk)
+        profile = ed_user.profile
+        adress = ed_user.adress.first()
+        user = self.request.user
+        context['user'] = user
+        context['user_form'] = UserForm(instance=ed_user)
+        context['profile_form'] = ProfileForm(instance=profile)
+        context['adress_form'] = AdressForm(instance=adress)
+        session = self.request.session
+        session['user_id'] = pk
+        return context
+
+class UserUpdateProfile(generic.RedirectView):
+    def get_redirect_url(self):
+        ed_user = self.request.user
+        profile = ed_user.profile
+        adress = ed_user.adress.first()
+        user_form = UserForm(data = self.request.POST, instance=ed_user)
+        profile_form = ProfileForm(data = self.request.POST, instance=profile)
+        adress_form = AdressForm(data = self.request.POST, instance=adress)
+        if user_form.is_valid() and profile_form.is_valid() and adress_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            adress_form.save()
+            return reverse_lazy('accounts:view_profile')
+        else:
+           messages.error(request, ('Пожалуйста, исправьте ошибки.'))
+        return reverse_lazy('accounts:view_profile')
     
 
 class UserList(generic.ListView):

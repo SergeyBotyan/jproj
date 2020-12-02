@@ -23,7 +23,7 @@ S-STORE | Edit Profile
 {% endif %}
 
 {% if not user.is_staff %}
-    <form action='{% url 'accounts:edit-profile' %}' method='POST' enctype="multipart/form-data">
+    <form action='{% url 'accounts:user-update-profile' %}' method='POST'>
      {{user_form|crispy}}
      {{profile_form|crispy}}
      {{adress_form|crispy}}

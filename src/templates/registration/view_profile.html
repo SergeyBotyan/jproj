@@ -8,14 +8,14 @@ S-STORE | Edit Profile
 {% endblock title %}
 
 {% block pagename %}
-  Профиль пользователя {{user.get_full_name}} 
+  Профиль пользователя {{user.get_full_name}} {{user.pk}} 
 {% endblock pagename %}
 
 {% block content %}
       {%if orders%}
         <a href="/orders/order">Заказы</a>
       {%endif%}
-      <a href="/accounts/edit-profile">Редактировать профиль</a><br>
+      <a href='{% url 'accounts:edit-profile' user.pk%}'>Редактировать профиль</a><br>
      Пользователь
      <h4>{{user.get_full_name}}</h4>
      Электронная почта
